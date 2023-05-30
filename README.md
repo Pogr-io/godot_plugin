@@ -5,8 +5,8 @@
 - [ ] Add URL Base to Project Settings
 - [ ] Build_ID & Client_ID in project settings
 
-init ~ [GET] to a specific URL with Header Information such as Build_ID, and Client_ID which are stored as 2 fields within the settings for the plugin
-end ~ [GET] when the game is closing, hit a specific URL with HEader  Information such as Build_ID, and Client_ID which are stored as 2 fields within the settings for the plugin
-event ~ [POST] to a specific URL a specific json payload
-data ~ [POST] to a specific URL a specific json payload
-monitor ~ [POST] to a specific URL memory, cpu, etc information on the game client's environment.
+init ~ [GET] to a specific URL with Header Information such as Build_ID, and Client_ID which are stored as 2 fields within the settings for the plugin<br>
+end ~ [GET] when the game is closing, hit a specific URL with HEader  Information such as Build_ID, and Client_ID which are stored as 2 fields within the settings for the plugin<br>
+event ~ [POST] to a specific URL a specific json payload<br>
+data ~ [POST] to a specific URL a specific json payload<br>
+monitor ~ [POST] to a specific URL memory, cpu, etc information on the game client's environment.<br>
