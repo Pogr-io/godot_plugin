@@ -1,0 +1,7 @@
+{
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/src/lib/godot-cpp/gen/include",
+        "${workspaceFolder}/src/lib/godot-cpp/include",
+        "${workspaceFolder}/src/lib/godot-cpp/gdextension"
+    ]
+}

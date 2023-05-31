@@ -1,0 +1,16 @@
+[configuration]
+
+entry_symbol= "pogr_plugin_init"
+
+[libraries]
+
+macos.debug = "bin/macos/libpogr_sdk_debug.dylib"
+macos.release = "bin/macos/libpogr_sdk.dylib"
+windows.debug.x86_64 = "bin/windows/pogr_sdk_debug.dll"
+windows.release.x86_64 = "bin/windows/pogr_sdk.dll"
+linux.debug.x86_64 = "bin/linux/libpogr_sdk_debug.so"
+linux.release.x86_64 = "bin/linux/libpogr_sdk.so"
+linux.debug.arm64 = "bin/linux/libpogr_sdk_debug.so"
+linux.release.arm64 = "bin/linux/libpogr_sdk.so"
+linux.debug.rv64 = "bin/linux/libpogr_sdk_debug.so"
+linux.release.rv64 = "bin/linux/libpogr_sdk.so"
