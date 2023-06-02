@@ -1,8 +1,8 @@
 # godot_plugin
 - [ ] Core Plugin Structure
-- [ ] implement  Multi-Threaded API Calls
+- [x] implement  Multi-Threaded API Calls
 - [ ] Try using only godot-cpp at first (HTTPRequest)
-- [ ] Add URL Base to Project Settings
+- [x] Add URL Base to Project Settings
 - [x] Build_ID & Client_ID in project settings
 
 init ~ [GET] to a specific URL with Header Information such as Build_ID, and Client_ID which are stored as 2 fields within the settings for the plugin<br>
