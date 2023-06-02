@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.0", "Forward Plus")
 boot_splash/show_image=false
 config/icon="res://assets/ThemeDark.png"
 
+[autoload]
+
+POGR_Manager="*res://addons/pogr_plugin/pogr_manager.tscn"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/pogr_plugin/plugin.cfg")

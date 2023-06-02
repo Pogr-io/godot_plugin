@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://co21y63e176p6"]
+
+[sub_resource type="GDScript" id="GDScript_gfiix"]
+resource_name = "POGR_API"
+script/source = "extends HTTPRequest
+
+var thread: Thread
+var mutex: Mutex
+
+func _ready() -> void:
+	thread = Thread.new()
+	mutex = Mutex.new()
+	thread.start(api_request)
+
+func api_request() -> void:
+	request_completed.connect(_on_request_completed)
+	mutex.lock()
+	request(ProjectSettings.get_setting(\"pogr_sdk/api/url\"), [\"client_id: \" + ProjectSettings.get_setting(\"pogr_sdk/ids/client_id\"),\"build_id: \" + ProjectSettings.get_setting(\"pogr_sdk/ids/build_id\")])
+	mutex.unlock()
+
+func _on_request_completed(_result, _response_code, _headers, body) -> void:
+	var json = JSON.parse_string(body.get_string_from_utf8())
+	print(json[\"headers\"])
+
+func _exit_tree() -> void:
+	thread.wait_to_finish()
+"
+
+[node name="POGR_Manager" type="HTTPRequest"]
+script = SubResource("GDScript_gfiix")
