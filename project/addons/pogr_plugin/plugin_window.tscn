@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://ceibkuwl0n1gk"]
+
+[ext_resource type="Texture2D" uid="uid://c2je4tk5785r1" path="res://addons/pogr_plugin/assets/ThemeDark-1.png" id="1_bm0xd"]
+
+[sub_resource type="GDScript" id="GDScript_gnaeq"]
+resource_name = "plugin_window"
+script/source = "extends Control
+
+var saveRestart: bool
+
+func _on_confirmation_dialog_confirmed() -> void:
+	saveRestart = true
+	queue_free()
+
+func _on_confirmation_dialog_canceled() -> void:
+	saveRestart = false
+	queue_free()
+"
+
+[node name="plugin_window" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_gnaeq")
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+initial_position = 2
+title = "Plugin enabled - Please restart the editor"
+size = Vector2i(396, 213)
+visible = true
+unresizable = true
+always_on_top = true
+popup_window = true
+ok_button_text = "Save and restart"
+dialog_text = "
+
+
+
+Thanks for enabling the POGR SDK Plugin!
+Do you want to save before restarting the editor?"
+dialog_close_on_escape = false
+cancel_button_text = "Restart without saving "
+
+[node name="Sprite2D" type="Sprite2D" parent="ConfirmationDialog"]
+position = Vector2(187, 40)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_bm0xd")
+
+[connection signal="canceled" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_canceled"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]

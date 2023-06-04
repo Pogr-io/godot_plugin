@@ -10,8 +10,9 @@ func _enable_plugin() -> void:
 	ProjectSettings.set_initial_value("pogr_sdk/ids/build_id", "")
 	ProjectSettings.set("pogr_sdk/api/url","")
 	ProjectSettings.set_initial_value("pogr_sdk/api/url", "")
-	push_warning("POGR SDK Plugin got enabled (PLEASE  RESTART THE EDITOR)")
-
+	#window with POGR logo opens thanks for enabling and shows editor restart button
+	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR,preload("res://addons/pogr_plugin/plugin_window.tscn").instantiate())
+	
 func _disable_plugin() -> void:
 	remove_autoload_singleton("POGR_Manager")
 	ProjectSettings.clear("pogr_sdk/ids/client_id")

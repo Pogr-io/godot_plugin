@@ -14,11 +14,15 @@ config/name="Pogr SDK Plugin"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 boot_splash/show_image=false
-config/icon="res://assets/ThemeDark.png"
+config/icon="res://addons/pogr_plugin/assets/ThemeDark.png"
 
 [autoload]
 
 POGR_Manager="*res://addons/pogr_plugin/pogr_manager.tscn"
+
+[dotnet]
+
+project/assembly_name="Pogr SDK Plugin"
 
 [editor_plugins]
 
