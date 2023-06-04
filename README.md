@@ -4,6 +4,7 @@
 - [ ] Try using only godot-cpp at first (HTTPRequest)
 - [x] Add URL Base to Project Settings
 - [x] Build_ID & Client_ID in project settings
+- [ ] Credits in engine and copyright and markdown files
 
 init ~ [GET] to a specific URL with Header Information such as Build_ID, and Client_ID which are stored as 2 fields within the settings for the plugin<br>
 end ~ [GET] when the game is closing, hit a specific URL with HEader  Information such as Build_ID, and Client_ID which are stored as 2 fields within the settings for the plugin<br>
