@@ -10,7 +10,6 @@ func _enable_plugin() -> void:
 	ProjectSettings.set_initial_value("pogr_sdk/ids/build_id", "")
 	ProjectSettings.set("pogr_sdk/api/url","")
 	ProjectSettings.set_initial_value("pogr_sdk/api/url", "")
-	#window with POGR logo opens thanks for enabling and shows editor restart button
 	add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR,preload("res://addons/pogr_plugin/plugin_window.tscn").instantiate())
 	
 func _disable_plugin() -> void:
