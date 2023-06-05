@@ -1,0 +1,129 @@
+[gd_scene load_steps=4 format=3 uid="uid://otoyugotn2af"]
+
+[ext_resource type="Texture2D" uid="uid://c2je4tk5785r1" path="res://addons/pogr_plugin/assets/ThemeDark-1.png" id="1_ithy8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahp7u"]
+bg_color = Color(0, 0, 0, 0.313726)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_62rcy"]
+
+[node name="POGR" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Logo" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 133.0
+offset_top = 29.0
+offset_right = 173.0
+offset_bottom = 29.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Logo"]
+position = Vector2(-45, -7)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_ithy8")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.083
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 0.215996
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ahp7u")
+
+[node name="About" type="LinkButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -47.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "About"
+uri = "https://vaporvee.com/"
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.5
+offset_top = -65.0
+offset_right = 200.5
+offset_bottom = 65.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+columns = 2
+
+[node name="LabelClID" type="Label" parent="Panel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0.639216)
+text = "Client ID     "
+
+[node name="ClientID" type="LineEdit" parent="Panel/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="LabelBldID" type="Label" parent="Panel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0.639216)
+text = "Build ID     "
+
+[node name="BuildID" type="LineEdit" parent="Panel/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="LabelSeperator" type="HSeparator" parent="Panel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 15
+theme_override_styles/separator = SubResource("StyleBoxEmpty_62rcy")
+
+[node name="InputSeperator" type="HSeparator" parent="Panel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 15
+theme_override_styles/separator = SubResource("StyleBoxEmpty_62rcy")
+
+[node name="LabelApiURL" type="Label" parent="Panel/MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 0.639216)
+text = "API URL"
+
+[node name="ApiURL" type="LineEdit" parent="Panel/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
