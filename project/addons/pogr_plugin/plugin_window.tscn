@@ -31,9 +31,8 @@ initial_position = 2
 title = "Plugin enabled - Please restart the editor"
 size = Vector2i(396, 213)
 visible = true
+exclusive = false
 unresizable = true
-always_on_top = true
-popup_window = true
 ok_button_text = "Save and restart"
 dialog_text = "
 
