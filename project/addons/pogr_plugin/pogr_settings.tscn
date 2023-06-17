@@ -91,7 +91,6 @@ text = "Client ID     "
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-text = "clientidheer"
 
 [node name="LabelBldID" type="Label" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -103,7 +102,6 @@ text = "Build ID     "
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-text = "buildidther"
 
 [node name="LabelSeperator" type="HSeparator" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -131,7 +129,6 @@ text = "API URL"
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-text = "http://postman-echo.com/get"
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 initial_position = 2

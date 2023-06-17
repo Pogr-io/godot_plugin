@@ -11,24 +11,21 @@ func _enable_plugin() -> void:
 	pogrwindow.get_child(0).connect("confirmed",save_restart)
 	pogrwindow.get_child(0).connect("canceled",restart)
 
-func _enter_tree():
+
+func _enter_tree():#
 	pogrsettings = preload("res://addons/pogr_plugin/pogr_settings.tscn").instantiate()
-	add_control_to_container(EditorPlugin.CONTAINER_PROJECT_SETTING_TAB_RIGHT,pogrsettings) #TODO: add invisible project settings for it
+	add_control_to_container(EditorPlugin.CONTAINER_PROJECT_SETTING_TAB_RIGHT,pogrsettings)
 
 func _disable_plugin() -> void:
 	remove_autoload_singleton("POGR_Manager")
-	print("POGR SDK Plugin got diasbled (Please restart the editor if it's causing issues)")
-	remove_control_from_container(EditorPlugin.CONTAINER_CANVAS_EDITOR_MENU,pogrwindow)
+	push_warning("POGR SDK Plugin got diasbled (Please restart the editor if it's causing issues)")
 	remove_control_from_container(EditorPlugin.CONTAINER_PROJECT_SETTING_TAB_RIGHT,pogrsettings)
 
-func _get_plugin_name():
+func _get_plugin_name() -> String:
 	return "Pogr SDK Plugin"
 
-func _forward_canvas_gui_input(event):
-	print(event)
-
-func save_restart():
+func save_restart() -> void:
 	get_editor_interface().restart_editor(true)
 
-func restart():
+func restart() -> void:
 	get_editor_interface().restart_editor(false)
