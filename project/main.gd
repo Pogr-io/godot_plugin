@@ -1,5 +1,5 @@
 extends Node2D
 
 func _ready():
-	PogrSDK.debug()
+	pogr_plugin.debug()
 	$CanvasLayer/Flow.play()

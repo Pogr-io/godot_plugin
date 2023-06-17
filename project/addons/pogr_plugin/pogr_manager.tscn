@@ -4,23 +4,24 @@
 resource_name = "POGR_API"
 script/source = "extends HTTPRequest
 
-var thread: Thread
-var mutex: Mutex
+var thread: Thread = Thread.new()
+var mutex: Mutex = Mutex.new()
 
-func _ready() -> void:
-	thread = Thread.new()
-	mutex = Mutex.new()
-	thread.start(api_request)
+var config: ConfigFile = ConfigFile.new()
+
+func _ready() -> void: thread.start(api_request)
 
 func api_request() -> void:
 	request_completed.connect(_on_request_completed)
 	mutex.lock()
-	request(ProjectSettings.get_setting(\"pogr_sdk/api/url\"), [\"client_id: \" + ProjectSettings.get_setting(\"pogr_sdk/ids/client_id\"),\"build_id: \" + ProjectSettings.get_setting(\"pogr_sdk/ids/build_id\")])
+	config.load(\"res://addons/pogr_plugin/pogr.cfg\")
+	request(config.get_value(\"api\",\"api_url\"), [\"client_id: \" + config.get_value(\"api\",\"client_id\"), \"build_id: \" + config.get_value(\"api\",\"build_id\")])
 	mutex.unlock()
 
 func _on_request_completed(_result, _response_code, _headers, body) -> void:
-	var json = JSON.parse_string(body.get_string_from_utf8())
-	print(json[\"headers\"])
+	var json: Dictionary = JSON.parse_string(body.get_string_from_utf8())
+	if(json[\"headers\"]):
+		print(json[\"headers\"])
 
 func _exit_tree() -> void:
 	thread.wait_to_finish()

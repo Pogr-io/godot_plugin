@@ -17,7 +17,7 @@ void gdextension_initialize(ModuleInitializationLevel p_level)
     {
         ClassDB::register_class<pogr_plugin>();
         pogrplugin = memnew(pogr_plugin);
-        Engine::get_singleton()->register_singleton("PogrSDK", pogr_plugin::get_singleton());
+        Engine::get_singleton()->register_singleton("pogr_plugin", pogr_plugin::get_singleton());
     }
 }
 
@@ -25,7 +25,7 @@ void gdextension_terminate(ModuleInitializationLevel p_level)
 {
     if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
     {
-        Engine::get_singleton()->unregister_singleton("PogrSDK");
+        Engine::get_singleton()->unregister_singleton("pogr_plugin");
         memdelete(pogrplugin);
     }
 }

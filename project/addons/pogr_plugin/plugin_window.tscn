@@ -5,16 +5,6 @@
 [sub_resource type="GDScript" id="GDScript_gnaeq"]
 resource_name = "plugin_window"
 script/source = "extends Control
-
-var saveRestart: bool
-
-func _on_confirmation_dialog_confirmed() -> void:
-	saveRestart = true
-	queue_free()
-
-func _on_confirmation_dialog_canceled() -> void:
-	saveRestart = false
-	queue_free()
 "
 
 [node name="plugin_window" type="Control"]
@@ -31,8 +21,8 @@ initial_position = 2
 title = "Plugin enabled - Please restart the editor"
 size = Vector2i(396, 213)
 visible = true
-exclusive = false
 unresizable = true
+borderless = true
 ok_button_text = "Save and restart"
 dialog_text = "
 

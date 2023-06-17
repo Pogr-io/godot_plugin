@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://otoyugotn2af"]
+[gd_scene load_steps=5 format=3 uid="uid://otoyugotn2af"]
 
+[ext_resource type="Script" path="res://addons/pogr_plugin/pogr_settings.gd" id="1_2kvic"]
 [ext_resource type="Texture2D" uid="uid://c2je4tk5785r1" path="res://addons/pogr_plugin/assets/ThemeDark-1.png" id="1_ithy8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahp7u"]
@@ -14,6 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_2kvic")
 
 [node name="Logo" type="Control" parent="."]
 layout_mode = 1
@@ -53,7 +55,7 @@ grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 8
 text = "About"
-uri = "https://vaporvee.com/"
+underline = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
@@ -89,6 +91,7 @@ text = "Client ID     "
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+text = "clientidheer"
 
 [node name="LabelBldID" type="Label" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -100,6 +103,7 @@ text = "Build ID     "
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+text = "buildidther"
 
 [node name="LabelSeperator" type="HSeparator" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -127,3 +131,61 @@ text = "API URL"
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+text = "http://postman-echo.com/get"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+initial_position = 2
+title = "About POGR"
+size = Vector2i(396, 213)
+exclusive = false
+unresizable = true
+ok_button_text = "View Credits"
+dialog_text = "
+
+
+
+                         Thanks for using  POGR! ❤️
+
+                         Copyright © 2023 Pogr, inc."
+dialog_close_on_escape = false
+
+[node name="Sprite2D" type="Sprite2D" parent="AcceptDialog"]
+position = Vector2(187, 40)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_ithy8")
+
+[node name="Credits" type="Window" parent="."]
+initial_position = 2
+title = "POGR Credits"
+size = Vector2i(720, 360)
+visible = false
+min_size = Vector2i(720, 360)
+
+[node name="Control" type="Control" parent="Credits"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Credits/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]
+[img=60]res://addons/pogr_plugin/assets/ThemeDark.png[/img]
+
+TODO: Credits
+"
+
+[connection signal="pressed" from="Panel/About" to="." method="_on_about_pressed"]
+[connection signal="text_changed" from="Panel/MarginContainer/GridContainer/ClientID" to="." method="_on_client_id_text_changed"]
+[connection signal="text_changed" from="Panel/MarginContainer/GridContainer/BuildID" to="." method="_on_build_id_text_changed"]
+[connection signal="text_changed" from="Panel/MarginContainer/GridContainer/ApiURL" to="." method="_on_api_url_text_changed"]
+[connection signal="confirmed" from="AcceptDialog" to="." method="_on_accept_dialog_confirmed"]
+[connection signal="close_requested" from="Credits" to="." method="_on_credits_close_requested"]
