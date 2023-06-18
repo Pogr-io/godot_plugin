@@ -25,7 +25,7 @@ func _notification(what):
 func api_request() -> void:
 	mutex.lock()
 	config.load(\"res://addons/pogr_plugin/pogr.cfg\")
-	request(config.get_value(\"api\",\"api_url\",\"\"), [\"client_id: \" + config.get_value(\"api\",\"client_id\",\"\"), \"build_id: \" + config.get_value(\"api\",\"build_id\",\"\")])
+	request(config.get_value(\"api\",\"api_url\",\"\"), [\"CLIENT_ID: \" + config.get_value(\"api\",\"client_id\",\"\"), \"BUILD_ID: \" + config.get_value(\"api\",\"build_id\",\"\")])
 	mutex.unlock()
 
 func _on_request_completed(_result, _response_code, _headers, body) -> void:
