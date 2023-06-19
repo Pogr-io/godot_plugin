@@ -1,12 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://otoyugotn2af"]
+[gd_scene load_steps=4 format=3 uid="uid://otoyugotn2af"]
 
 [ext_resource type="Script" path="res://addons/pogr_plugin/pogr_settings.gd" id="1_2kvic"]
 [ext_resource type="Texture2D" uid="uid://c2je4tk5785r1" path="res://addons/pogr_plugin/assets/ThemeDark-1.png" id="1_ithy8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahp7u"]
 bg_color = Color(0, 0, 0, 0.313726)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_62rcy"]
 
 [node name="POGR" type="Control"]
 layout_mode = 3
@@ -78,7 +76,7 @@ theme_override_constants/margin_bottom = 5
 [node name="GridContainer" type="GridContainer" parent="Panel/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 8
+size_flags_vertical = 4
 columns = 2
 
 [node name="LabelClID" type="Label" parent="Panel/MarginContainer/GridContainer"]
@@ -91,7 +89,7 @@ text = "Client ID     "
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-text = "<null>"
+text = "imagineyourclientidhere"
 
 [node name="LabelBldID" type="Label" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
@@ -103,35 +101,7 @@ text = "Build ID     "
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-text = "<null>"
-
-[node name="LabelSeperator" type="HSeparator" parent="Panel/MarginContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.0
-theme_override_constants/separation = 15
-theme_override_styles/separator = SubResource("StyleBoxEmpty_62rcy")
-
-[node name="InputSeperator" type="HSeparator" parent="Panel/MarginContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.0
-theme_override_constants/separation = 15
-theme_override_styles/separator = SubResource("StyleBoxEmpty_62rcy")
-
-[node name="LabelApiURL" type="Label" parent="Panel/MarginContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_colors/font_color = Color(1, 1, 1, 0.639216)
-text = "API URL"
-
-[node name="ApiURL" type="LineEdit" parent="Panel/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-text = "<null>"
+text = "buildidtheree"
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 initial_position = 2
@@ -186,6 +156,5 @@ TODO: Credits
 [connection signal="pressed" from="Panel/About" to="." method="_on_about_pressed"]
 [connection signal="text_changed" from="Panel/MarginContainer/GridContainer/ClientID" to="." method="_on_client_id_text_changed"]
 [connection signal="text_changed" from="Panel/MarginContainer/GridContainer/BuildID" to="." method="_on_build_id_text_changed"]
-[connection signal="text_changed" from="Panel/MarginContainer/GridContainer/ApiURL" to="." method="_on_api_url_text_changed"]
 [connection signal="confirmed" from="AcceptDialog" to="." method="_on_accept_dialog_confirmed"]
 [connection signal="close_requested" from="Credits" to="." method="_on_credits_close_requested"]

@@ -7,25 +7,28 @@ script/source = "extends HTTPRequest
 var thread: Thread = Thread.new()
 var mutex: Mutex = Mutex.new()
 var close_request: bool = false
+var monitor_dict: Dictionary = {}
 
 var config: ConfigFile = ConfigFile.new()
 
 func _ready() -> void:
 	request_completed.connect(_on_request_completed)
-	thread.start(api_request)
+	thread.start(toggle_session)
 	thread.wait_to_finish()
+	
+	monitor_on_init()
 
-func _notification(what):
+func _notification(what) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		get_tree().set_auto_accept_quit(false)
-		thread.start(api_request)
+		thread.start(toggle_session)
 		thread.wait_to_finish()
 		close_request = true
 
-func api_request() -> void:
+func toggle_session() -> void:
 	mutex.lock()
 	config.load(\"res://addons/pogr_plugin/pogr.cfg\")
-	request(config.get_value(\"api\",\"api_url\",\"\"), [\"CLIENT_ID: \" + config.get_value(\"api\",\"client_id\",\"\"), \"BUILD_ID: \" + config.get_value(\"api\",\"build_id\",\"\")])
+	request(\"http://postman-echo.com/get\", [\"CLIENT_ID: \" + config.get_value(\"api\",\"client_id\",\"\"), \"BUILD_ID: \" + config.get_value(\"api\",\"build_id\",\"\")], HTTPClient.METHOD_GET)
 	mutex.unlock()
 
 func _on_request_completed(_result, _response_code, _headers, body) -> void:
@@ -37,7 +40,40 @@ func _on_request_completed(_result, _response_code, _headers, body) -> void:
 
 func _exit_tree() -> void:
 	thread.wait_to_finish()
+
+func monitor_on_init():
+	monitor_dict = {
+		\"system\": OS.get_name(),
+		\"system_distro\": OS.get_distribution_name(),
+		\"system_version\": OS.get_version(),
+		\"device\": OS.get_model_name(),
+		\"unique_id\": OS.get_unique_id(),
+		\"processor_name\": OS.get_processor_name(),
+		\"processor_count\": OS.get_processor_count(),
+		\"gpu_driver_info\": OS.get_video_adapter_driver_info()
+	}
+	if(OS.has_feature(\"editor\")):
+		monitor_dict.merge({\"build_type\": \"editor\"})
+	elif(OS.has_feature(\"debug\")):
+		monitor_dict.merge({\"build_type\": \"debug\"})
+	elif(OS.has_feature(\"release\")):
+		monitor_dict.merge({\"build_type\": \"release\"})
+	_on_monitor_timer_timeout()
+
+func _on_monitor_timer_timeout() -> void:# add setting to disable that and add missing values like max memory and much more via cpp
+	monitor_dict.merge({
+		\"language\": OS.get_locale(),
+		\"memory_peak_ussage\": OS.get_static_memory_peak_usage(),
+		\"memory_ussage\": OS.get_static_memory_usage()
+		},true)
+	print(monitor_dict)
+	$MonitorTimer.start()
 "
 
 [node name="POGR_Manager" type="HTTPRequest"]
 script = SubResource("GDScript_gfiix")
+
+[node name="MonitorTimer" type="Timer" parent="."]
+wait_time = 30.0
+
+[connection signal="timeout" from="MonitorTimer" to="." method="_on_monitor_timer_timeout"]

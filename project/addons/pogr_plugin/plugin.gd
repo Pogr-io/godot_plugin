@@ -12,7 +12,7 @@ func _enable_plugin() -> void:
 	pogrwindow.get_child(0).connect("canceled",restart)
 
 
-func _enter_tree():#
+func _enter_tree():
 	pogrsettings = preload("res://addons/pogr_plugin/pogr_settings.tscn").instantiate()
 	add_control_to_container(EditorPlugin.CONTAINER_PROJECT_SETTING_TAB_RIGHT,pogrsettings)
 
