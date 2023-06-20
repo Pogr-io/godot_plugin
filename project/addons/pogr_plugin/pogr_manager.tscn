@@ -43,14 +43,25 @@ func _exit_tree() -> void:
 
 func monitor_on_init():
 	monitor_dict = {
-		\"system\": OS.get_name(),
-		\"system_distro\": OS.get_distribution_name(),
-		\"system_version\": OS.get_version(),
+		\"Engine\": \"Godot Engine \" + Engine.get_version_info().string,
+		\"OS\": {
+			\"name\": OS.get_name(),
+			\"distro\": OS.get_distribution_name(),
+			\"version\": OS.get_version()
+		},
 		\"device\": OS.get_model_name(),
 		\"unique_id\": OS.get_unique_id(),
-		\"processor_name\": OS.get_processor_name(),
-		\"processor_count\": OS.get_processor_count(),
-		\"gpu_driver_info\": OS.get_video_adapter_driver_info()
+		\"processor\": {
+			\"name\": OS.get_processor_name(),
+			\"count\": OS.get_processor_count()	
+		},
+		\"gpu\": {
+			\"name\": RenderingServer.get_video_adapter_name(),
+			\"vendor\": RenderingServer.get_video_adapter_vendor(),
+			\"driver_info\": OS.get_video_adapter_driver_info(),
+			\"api_version\": RenderingServer.get_video_adapter_api_version(),
+			\"fps\": Engine.get_frames_per_second()
+		},
 	}
 	if(OS.has_feature(\"editor\")):
 		monitor_dict.merge({\"build_type\": \"editor\"})
@@ -63,9 +74,14 @@ func monitor_on_init():
 func _on_monitor_timer_timeout() -> void:# add setting to disable that and add missing values like max memory and much more via cpp
 	monitor_dict.merge({
 		\"language\": OS.get_locale(),
-		\"memory_peak_ussage\": OS.get_static_memory_peak_usage(),
-		\"memory_ussage\": OS.get_static_memory_usage()
-		},true)
+		\"time\": \"{year}-{month}-{day} {hour}:{minute}:{second}\".format(Time.get_datetime_dict_from_system(true)),
+		\"memory\": {
+			\"current_ussage\": OS.get_static_memory_usage(),
+			\"peak_current_ussage\": OS.get_static_memory_peak_usage()
+		},
+		\"mobile_permissions\": OS.get_granted_permissions()
+	},true)
+	monitor_dict[\"gpu\"].merge({ \"fps\": Engine.get_frames_per_second() },true) # changes value inside other key
 	print(monitor_dict)
 	$MonitorTimer.start()
 "
