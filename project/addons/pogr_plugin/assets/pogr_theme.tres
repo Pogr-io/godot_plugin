@@ -1,0 +1,145 @@
+[gd_resource type="Theme" load_steps=27 format=3 uid="uid://celf8ca87gih"]
+
+[ext_resource type="Texture2D" uid="uid://0e8wiwt5hnwn" path="res://addons/pogr_plugin/assets/toggle_off.svg" id="1_3irgt"]
+[ext_resource type="Texture2D" uid="uid://b6tdsvj00iqhv" path="res://addons/pogr_plugin/assets/toggle_on.svg" id="1_fhhex"]
+[ext_resource type="FontFile" uid="uid://csmneg40wqun8" path="res://addons/pogr_plugin/assets/ubuntu.ttf" id="1_ydpv4"]
+[ext_resource type="Texture2D" uid="uid://co870kuqur382" path="res://addons/pogr_plugin/assets/checkbox_on.png" id="2_whgnx"]
+[ext_resource type="Texture2D" uid="uid://1ue72bu07qq1" path="res://addons/pogr_plugin/assets/checkbox_off.png" id="3_a4kl4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ddroj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gc6k1"]
+content_margin_left = 6.0
+content_margin_top = 12.0
+content_margin_right = 6.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0.0509804)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1vi6"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.0509804)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wrq8p"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.0784314)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wlrup"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_63y6j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jpp14"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_818ht"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jxa5e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dp1qe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2scwn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6nu0l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rbeo5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tc72k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0o4vo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_smsbf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fwnhe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1mms"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.290196, 0.290196, 0.372549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ukn1s"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.0588235)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qi1hv"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.0509804)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3c7y"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.0784314)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[resource]
+Button/fonts/font = ExtResource("1_ydpv4")
+Button/styles/focus = SubResource("StyleBoxEmpty_ddroj")
+Button/styles/hover = SubResource("StyleBoxFlat_gc6k1")
+Button/styles/normal = SubResource("StyleBoxFlat_h1vi6")
+Button/styles/pressed = SubResource("StyleBoxFlat_wrq8p")
+CheckBox/icons/checked = ExtResource("2_whgnx")
+CheckBox/icons/unchecked = ExtResource("3_a4kl4")
+CheckBox/styles/disabled = SubResource("StyleBoxEmpty_wlrup")
+CheckBox/styles/focus = SubResource("StyleBoxEmpty_63y6j")
+CheckBox/styles/hover = SubResource("StyleBoxEmpty_jpp14")
+CheckBox/styles/hover_pressed = SubResource("StyleBoxEmpty_818ht")
+CheckBox/styles/normal = SubResource("StyleBoxEmpty_jxa5e")
+CheckBox/styles/pressed = SubResource("StyleBoxEmpty_dp1qe")
+CheckButton/icons/checked = ExtResource("1_fhhex")
+CheckButton/icons/unchecked = ExtResource("1_3irgt")
+CheckButton/styles/disabled = SubResource("StyleBoxEmpty_2scwn")
+CheckButton/styles/focus = SubResource("StyleBoxEmpty_6nu0l")
+CheckButton/styles/hover = SubResource("StyleBoxEmpty_rbeo5")
+CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_tc72k")
+CheckButton/styles/normal = SubResource("StyleBoxEmpty_0o4vo")
+CheckButton/styles/pressed = SubResource("StyleBoxEmpty_smsbf")
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/fonts/font = ExtResource("1_ydpv4")
+LineEdit/fonts/font = ExtResource("1_ydpv4")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_fwnhe")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_f1mms")
+OptionButton/styles/hover = SubResource("StyleBoxFlat_ukn1s")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_qi1hv")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_y3c7y")
+RichTextLabel/fonts/normal_font = ExtResource("1_ydpv4")
+TextEdit/fonts/font = ExtResource("1_ydpv4")

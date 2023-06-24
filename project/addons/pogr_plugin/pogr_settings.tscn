@@ -1,10 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://otoyugotn2af"]
+[gd_scene load_steps=6 format=3 uid="uid://otoyugotn2af"]
 
 [ext_resource type="Script" path="res://addons/pogr_plugin/pogr_settings.gd" id="1_2kvic"]
 [ext_resource type="Texture2D" uid="uid://c2je4tk5785r1" path="res://addons/pogr_plugin/assets/ThemeDark-1.png" id="1_ithy8"]
+[ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="2_bfupp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahp7u"]
-bg_color = Color(0, 0, 0, 0.313726)
+bg_color = Color(0.160784, 0.160784, 0.211765, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5jkhp"]
+bg_color = Color(0.101961, 0.101961, 0.133333, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_left = 8
 
 [node name="POGR" type="Control"]
 layout_mode = 3
@@ -15,39 +23,27 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2kvic")
 
-[node name="Logo" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 0
-offset_left = 133.0
-offset_top = 29.0
-offset_right = 173.0
-offset_bottom = 29.0
-
-[node name="Sprite2D" type="Sprite2D" parent="Logo"]
-position = Vector2(-45, -7)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("1_ithy8")
-
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.083
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 0.215996
+offset_left = 193.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ahp7u")
 
 [node name="About" type="LinkButton" parent="Panel"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -47.0
-offset_top = -23.0
+offset_left = 900.0
+offset_top = 620.0
+offset_right = -4.0
+offset_bottom = -3.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
@@ -56,16 +52,15 @@ text = "About"
 underline = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.5
-offset_top = -65.0
-offset_right = 200.5
-offset_bottom = 65.0
+layout_mode = 2
+anchor_left = 0.41
+anchor_top = 0.402
+anchor_right = 0.766
+anchor_bottom = 0.598
+offset_left = -132.47
+offset_top = 0.169983
+offset_right = 37.278
+offset_bottom = -0.170044
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 5
@@ -80,35 +75,101 @@ size_flags_vertical = 4
 columns = 2
 
 [node name="LabelClID" type="Label" parent="Panel/MarginContainer/GridContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_colors/font_color = Color(1, 1, 1, 0.639216)
-text = "Client ID     "
-
-[node name="ClientID" type="LineEdit" parent="Panel/MarginContainer/GridContainer"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("2_bfupp")
+theme_override_colors/font_color = Color(1, 1, 1, 0.639216)
+text = "Client ID"
+
+[node name="ClientID" type="LineEdit" parent="Panel/MarginContainer/GridContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
 size_flags_horizontal = 8
+theme = ExtResource("2_bfupp")
 text = "imagineyourclientidhere"
 
 [node name="LabelBldID" type="Label" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+theme = ExtResource("2_bfupp")
 theme_override_colors/font_color = Color(1, 1, 1, 0.639216)
 text = "Build ID     "
 
 [node name="BuildID" type="LineEdit" parent="Panel/MarginContainer/GridContainer"]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+theme = ExtResource("2_bfupp")
 text = "buildidtheree"
+
+[node name="CheckButton" type="CheckButton" parent="Panel"]
+layout_mode = 2
+offset_left = 84.0
+offset_top = 454.0
+offset_right = 384.0
+offset_bottom = 474.0
+theme = ExtResource("2_bfupp")
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 2
+anchor_left = 0.429
+anchor_top = 0.559
+anchor_right = 0.51
+anchor_bottom = 0.607
+offset_left = -165.843
+offset_top = 38.265
+offset_right = -165.874
+offset_bottom = 38.2569
+theme = ExtResource("2_bfupp")
+action_mode = 0
+text = "button"
+
+[node name="CheckBox" type="CheckBox" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.192
+anchor_top = 0.656
+anchor_right = 0.218
+anchor_bottom = 0.693
+offset_left = -71.664
+offset_top = 66.76
+offset_right = -72.39
+offset_bottom = 66.858
+theme = ExtResource("2_bfupp")
+
+[node name="OptionButton" type="OptionButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.34
+anchor_top = 0.748
+anchor_right = 0.449
+anchor_bottom = 0.779
+offset_left = -101.78
+offset_top = 3.58002
+offset_right = -101.439
+offset_bottom = 10.965
+theme = ExtResource("2_bfupp")
+
+[node name="Panel2" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_left = -201.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_5jkhp")
+
+[node name="Sprite2D" type="Sprite2D" parent="Panel/Panel2"]
+position = Vector2(67.0175, 31.95)
+scale = Vector2(0.117544, 0.117544)
+texture = ExtResource("1_ithy8")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 initial_position = 2
 title = "About POGR"
-size = Vector2i(396, 213)
+size = Vector2i(396, 239)
 exclusive = false
 unresizable = true
+theme = ExtResource("2_bfupp")
 ok_button_text = "View Credits"
 dialog_text = "
 
@@ -130,6 +191,7 @@ title = "POGR Credits"
 size = Vector2i(720, 360)
 visible = false
 min_size = Vector2i(720, 360)
+theme = ExtResource("2_bfupp")
 
 [node name="Control" type="Control" parent="Credits"]
 layout_mode = 3
@@ -146,6 +208,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_bfupp")
 bbcode_enabled = true
 text = "[center]
 [img=60]res://addons/pogr_plugin/assets/ThemeDark.png[/img]
