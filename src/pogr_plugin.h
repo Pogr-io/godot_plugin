@@ -23,5 +23,7 @@ public:
     ~pogr_plugin();
 
     void debug();
+
+    Dictionary get_sys_monitor_info();
 };
 #endif
