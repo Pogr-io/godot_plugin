@@ -8,6 +8,8 @@ var monitor_dict: Dictionary = {}
 var config: ConfigFile = ConfigFile.new()
 
 func _ready() -> void:
+	if(OS.get_name() == "Windows"):
+		$WinCPUPercentTimer.start()
 	request_completed.connect(_on_request_completed)
 	thread.start(toggle_session)
 	thread.wait_to_finish()
@@ -37,7 +39,7 @@ func _on_request_completed(_result, _response_code, _headers, body) -> void:
 func _exit_tree() -> void:
 	thread.wait_to_finish()
 
-func monitor_on_init():
+func monitor_on_init() -> void:
 	monitor_dict = {
 		"Engine": "Godot Engine " + Engine.get_version_info().string,
 		"OS": {
@@ -47,9 +49,10 @@ func monitor_on_init():
 		},
 		"device": OS.get_model_name(),
 		"unique_id": OS.get_unique_id(),
-		"processor": {
+		"cpu": {
 			"name": OS.get_processor_name(),
-			"count": OS.get_processor_count()	
+			"count": OS.get_processor_count(),
+			"percentage": "unknown"
 		},
 		"gpu": {
 			"name": RenderingServer.get_video_adapter_name(),
@@ -57,6 +60,11 @@ func monitor_on_init():
 			"driver_info": OS.get_video_adapter_driver_info(),
 			"api_version": RenderingServer.get_video_adapter_api_version(),
 			"fps": Engine.get_frames_per_second()
+		},
+		"memory": {
+			"max_physical": pogr_plugin.get_sys_monitor_info().max_phys_memory,
+			"max_virtual": pogr_plugin.get_sys_monitor_info().max_virt_memory,
+			"max_pagefile": pogr_plugin.get_sys_monitor_info().max_page_memory,
 		},
 	}
 	if(OS.has_feature("editor")):
@@ -70,17 +78,17 @@ func monitor_on_init():
 func _on_monitor_timer_timeout() -> void:# add setting to disable that and add missing values like max memory and much more via cpp
 	monitor_dict.merge({
 		"language": OS.get_locale(),
-		"time": "{year}-{month}-{day} {hour}:{minute}:{second}".format(Time.get_datetime_dict_from_system(true)),
-		"memory": {
-			"max_physical": pogr_plugin.get_sys_monitor_info().max_phys_memory,
-			"free_physical": pogr_plugin.get_sys_monitor_info().free_phys_memory,
-			"max_virtual": pogr_plugin.get_sys_monitor_info().max_virt_memory,
-			"free_virtual": pogr_plugin.get_sys_monitor_info().free_virt_memory,
-			"max_pagefile": pogr_plugin.get_sys_monitor_info().max_page_memory,
-			"free_pagefile": pogr_plugin.get_sys_monitor_info().free_page_memory,
-		},
-		"mobile_permissions": OS.get_granted_permissions()
+		"time": "{year}-{month}-{day} {hour}:{minute}:{second}".format(Time.get_datetime_dict_from_system(true))
 	},true)
 	monitor_dict["gpu"].merge({ "fps": Engine.get_frames_per_second() },true) # changes value inside other key
+	monitor_dict["memory"].merge({ 
+		"free_physical": pogr_plugin.get_sys_monitor_info().free_phys_memory,
+		"free_virtual": pogr_plugin.get_sys_monitor_info().free_virt_memory,
+		"free_pagefile": pogr_plugin.get_sys_monitor_info().free_page_memory,
+	},true)
 	print(monitor_dict)
 	$MonitorTimer.start()
+
+func win_cpu_percent_timer() -> void: 
+	pogr_plugin.win_cpu_load_update()
+	monitor_dict["cpu"].merge({ "percentage": pogr_plugin.get_sys_monitor_info().cpu_load_percentage },true)
