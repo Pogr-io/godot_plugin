@@ -25,7 +25,5 @@ public:
     void debug();
 
     Dictionary get_sys_monitor_info();
-    float cpu_load_percenatge;
-    void win_cpu_load_update();
 };
 #endif

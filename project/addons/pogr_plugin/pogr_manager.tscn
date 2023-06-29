@@ -8,7 +8,4 @@ script = ExtResource("1_fog0l")
 [node name="MonitorTimer" type="Timer" parent="."]
 wait_time = 30.0
 
-[node name="WinCPUPercentTimer" type="Timer" parent="."]
-
 [connection signal="timeout" from="MonitorTimer" to="." method="_on_monitor_timer_timeout"]
-[connection signal="timeout" from="WinCPUPercentTimer" to="." method="win_cpu_percent_timer"]

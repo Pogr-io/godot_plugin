@@ -2,7 +2,7 @@
 #include <stdio.h>
 #ifdef _WIN32
 #include <Windows.h>
-#include "win_cpu_load.hpp"
+#include "execute.hpp"
 #endif
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/editor_plugin.hpp>
@@ -14,7 +14,6 @@ void pogr_plugin::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("debug"), &pogr_plugin::debug);
     ClassDB::bind_method(D_METHOD("get_sys_monitor_info"), &pogr_plugin::get_sys_monitor_info);
-    ClassDB::bind_method(D_METHOD("win_cpu_load_update"), &pogr_plugin::win_cpu_load_update);
 }
 
 pogr_plugin *pogr_plugin::get_singleton()
@@ -65,17 +64,8 @@ Dictionary pogr_plugin::get_sys_monitor_info()
     sys_monitor_info["free_page_memory"] = statex.ullAvailPageFile;
     sys_monitor_info["max_virt_memory"] = statex.ullTotalVirtual;
     sys_monitor_info["free_virt_memory"] = statex.ullAvailVirtual;
-    if (cpu_load_percenatge)
-        sys_monitor_info["cpu_load_percentage"] = cpu_load_percenatge;
+    sys_monitor_info["cpu_load_percentage"] = String(exec("wmic cpu get LoadPercentage /value").c_str()).replace("\r\n\r\nLoadPercentage=", "").replace("\r\n\r\n\r\n\r\n", "");
 #endif
     sys_monitor_info.make_read_only();
     return sys_monitor_info;
-}
-
-void pogr_plugin::win_cpu_load_update()
-{
-#ifdef _WIN32
-    CPU c;
-    cpu_load_percenatge = c.get(); // TODO: make it more average
-#endif
 }

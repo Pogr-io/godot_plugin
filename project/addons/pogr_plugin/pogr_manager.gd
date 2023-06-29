@@ -1,6 +1,7 @@
 extends HTTPRequest
 
 var thread: Thread = Thread.new()
+var close_thread: Thread = Thread.new()
 var mutex: Mutex = Mutex.new()
 var close_request: bool = false
 var monitor_dict: Dictionary = {}
@@ -8,19 +9,16 @@ var monitor_dict: Dictionary = {}
 var config: ConfigFile = ConfigFile.new()
 
 func _ready() -> void:
-	if(OS.get_name() == "Windows"):
-		$WinCPUPercentTimer.start()
 	request_completed.connect(_on_request_completed)
 	thread.start(toggle_session)
 	thread.wait_to_finish()
-	
-	monitor_on_init()
+	thread.start(monitor_on_init)
 
 func _notification(what) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		get_tree().set_auto_accept_quit(false)
-		thread.start(toggle_session)
-		thread.wait_to_finish()
+		close_thread.start(toggle_session)
+		close_thread.wait_to_finish()
 		close_request = true
 
 func toggle_session() -> void:
@@ -40,6 +38,7 @@ func _exit_tree() -> void:
 	thread.wait_to_finish()
 
 func monitor_on_init() -> void:
+	mutex.lock()
 	monitor_dict = {
 		"Engine": "Godot Engine " + Engine.get_version_info().string,
 		"OS": {
@@ -73,9 +72,15 @@ func monitor_on_init() -> void:
 		monitor_dict.merge({"build_type": "debug"})
 	elif(OS.has_feature("release")):
 		monitor_dict.merge({"build_type": "release"})
-	_on_monitor_timer_timeout()
+	mutex.unlock()
+	monitor_update()
 
 func _on_monitor_timer_timeout() -> void:# add setting to disable that and add missing values like max memory and much more via cpp
+	thread.wait_to_finish()
+	thread.start(monitor_update)
+
+func monitor_update() -> void:
+	mutex.lock()
 	monitor_dict.merge({
 		"language": OS.get_locale(),
 		"time": "{year}-{month}-{day} {hour}:{minute}:{second}".format(Time.get_datetime_dict_from_system(true))
@@ -86,9 +91,7 @@ func _on_monitor_timer_timeout() -> void:# add setting to disable that and add m
 		"free_virtual": pogr_plugin.get_sys_monitor_info().free_virt_memory,
 		"free_pagefile": pogr_plugin.get_sys_monitor_info().free_page_memory,
 	},true)
-	print(monitor_dict)
-	$MonitorTimer.start()
-
-func win_cpu_percent_timer() -> void: 
-	pogr_plugin.win_cpu_load_update()
 	monitor_dict["cpu"].merge({ "percentage": pogr_plugin.get_sys_monitor_info().cpu_load_percentage },true)
+	print(monitor_dict)
+	mutex.unlock()
+	$MonitorTimer.start()
