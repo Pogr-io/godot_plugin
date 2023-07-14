@@ -3,9 +3,12 @@
 [ext_resource type="Script" path="res://addons/pogr_plugin/pogr_manager.gd" id="1_fog0l"]
 
 [node name="POGR_Manager" type="HTTPRequest"]
+use_threads = true
 script = ExtResource("1_fog0l")
 
 [node name="MonitorTimer" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 8.0
+autostart = true
 
+[connection signal="request_completed" from="." to="." method="_on_request_completed"]
 [connection signal="timeout" from="MonitorTimer" to="." method="_on_monitor_timer_timeout"]

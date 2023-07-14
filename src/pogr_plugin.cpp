@@ -64,7 +64,7 @@ Dictionary pogr_plugin::get_sys_monitor_info()
     sys_monitor_info["free_page_memory"] = statex.ullAvailPageFile;
     sys_monitor_info["max_virt_memory"] = statex.ullTotalVirtual;
     sys_monitor_info["free_virt_memory"] = statex.ullAvailVirtual;
-    sys_monitor_info["cpu_load_percentage"] = String(exec("wmic cpu get LoadPercentage /value").c_str()).replace("\r\n\r\nLoadPercentage=", "").replace("\r\n\r\n\r\n\r\n", "");
+    sys_monitor_info["cpu_load_percentage"] = std::stoi(String(exec("wmic cpu get LoadPercentage /value").c_str()).replace("\r\n\r\nLoadPercentage=", "").replace("\r\n\r\n\r\n\r\n", "").utf8().get_data());
 #endif
     sys_monitor_info.make_read_only();
     return sys_monitor_info;

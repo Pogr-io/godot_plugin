@@ -164,8 +164,8 @@ scale = Vector2(0.117544, 0.117544)
 texture = ExtResource("1_ithy8")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
-initial_position = 2
 title = "About POGR"
+initial_position = 2
 size = Vector2i(396, 239)
 exclusive = false
 unresizable = true
@@ -186,8 +186,8 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_ithy8")
 
 [node name="Credits" type="Window" parent="."]
-initial_position = 2
 title = "POGR Credits"
+initial_position = 2
 size = Vector2i(720, 360)
 visible = false
 min_size = Vector2i(720, 360)
