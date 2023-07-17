@@ -36,13 +36,29 @@ func _on_monitor_timer_timeout() -> void:
 	thread.wait_to_finish()
 	thread.start(monitor_update)
 
-func monitor_update() -> void:
-	var sys_monitor_info = pogr_plugin.get_sys_monitor_info()
-	var cpu_percent: String = "unknown"
+func exec_sys_info() -> Dictionary:
+	var output: Dictionary = {
+			"cpu_percent": "unknown",
+			"gpu_status": "unknown"
+		}
+	var cpu_percent: String;
 	if (OS.get_name() == "Windows"):
 		var cpupercentoutput = []
 		OS.execute("wmic",["cpu", "get", "loadpercentage", "/format:csv"],cpupercentoutput,true)
-		cpu_percent = cpupercentoutput[0].split(",")[2].strip_escapes()
+		output.cpu_percent = cpupercentoutput[0].split(",")[2].strip_escapes()
+		var gpustatusoutput = []
+		OS.execute("wmic",["path", "win32_VideoController", "get", "status"],gpustatusoutput,true)
+		output.gpu_status = gpustatusoutput[0].strip_escapes().strip_edges().split("      ")
+		var reversed_gpu_statuses: Array # Last GPU is main used GPU
+		reversed_gpu_statuses = output.gpu_status
+		reversed_gpu_statuses.reverse()
+		output.gpu_status = reversed_gpu_statuses[0]
+	output.make_read_only()
+	return output
+
+func monitor_update() -> void:
+	var sys_monitor_info = pogr_plugin.get_sys_monitor_info()
+
 	monitor_dict = {
 		"engine": "Godot Engine " + Engine.get_version_info().string,
 		"loaded_objects":{
@@ -67,7 +83,7 @@ func monitor_update() -> void:
 		"cpu": {
 			"name": OS.get_processor_name(),
 			"count": OS.get_processor_count(),
-			"percentage": cpu_percent,
+			"percentage": exec_sys_info().cpu_percent,
 			"process_time":{
 				"physics" : Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS),
 				"navigation": Performance.get_monitor(Performance.TIME_NAVIGATION_PROCESS)
@@ -81,6 +97,7 @@ func monitor_update() -> void:
 			"frame_process_time": Performance.get_monitor(Performance.TIME_PROCESS),
 			"rendered_objects_last_frame": Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME),
 			"video_memory_used": Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED),
+			"status": exec_sys_info().gpu_status,
 			"fps": Performance.get_monitor(Performance.TIME_FPS)
 		},
 		"memory": {
