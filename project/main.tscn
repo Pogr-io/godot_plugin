@@ -483,8 +483,19 @@ grow_vertical = 2
 position = Vector2(32, 32)
 texture = ExtResource("2_8oi05")
 
-[node name="Flow" type="AnimatedSprite2D" parent="CanvasLayer"]
-position = Vector2(1092, 59)
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="Flow" type="AnimatedSprite2D" parent="CanvasLayer/Control"]
+position = Vector2(-12, 51)
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_o4yj3")
 frame_progress = 0.855792

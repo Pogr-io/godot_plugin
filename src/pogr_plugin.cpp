@@ -2,11 +2,12 @@
 #include <stdio.h>
 #ifdef _WIN32
 #include <Windows.h>
-#include "execute.hpp"
 #endif
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/classes/editor_plugin.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/os.hpp>
+#include <godot_cpp/variant/array.hpp>
 
 pogr_plugin *pogr_plugin::singleton = nullptr;
 
@@ -52,8 +53,7 @@ Dictionary pogr_plugin::get_sys_monitor_info()
     sys_monitor_info["free_page_memory"] = "unknown";
     sys_monitor_info["max_virt_memory"] = "unknown";
     sys_monitor_info["free_virt_memory"] = "unknown";
-
-    sys_monitor_info["cpu_load_percentage"] = "unknown";
+    String cpu_percent = "unknown";
 #ifdef _WIN32
     MEMORYSTATUSEX statex;
     statex.dwLength = sizeof(statex);
@@ -64,8 +64,19 @@ Dictionary pogr_plugin::get_sys_monitor_info()
     sys_monitor_info["free_page_memory"] = statex.ullAvailPageFile;
     sys_monitor_info["max_virt_memory"] = statex.ullTotalVirtual;
     sys_monitor_info["free_virt_memory"] = statex.ullAvailVirtual;
-    sys_monitor_info["cpu_load_percentage"] = std::stoi(String(exec("wmic cpu get LoadPercentage /value").c_str()).replace("\r\n\r\nLoadPercentage=", "").replace("\r\n\r\n\r\n\r\n", "").utf8().get_data());
+    // CPU Percentage
+    // TODO: Fix
+    /*PackedStringArray cpupercentoutput;
+    PackedStringArray args;
+    args.push_back("cpu");
+    args.push_back("get");
+    args.push_back("loadpercentage");
+    OS p_os;
+    p_os.execute("wmic", args, cpupercentoutput, true);
+    cpu_percent = String(cpupercentoutput[0]).split(",")[2].strip_escapes();*/
 #endif
+    sys_monitor_info["cpu_load_percentage"] = cpu_percent;
+
     sys_monitor_info.make_read_only();
     return sys_monitor_info;
 }

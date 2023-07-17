@@ -1,23 +1,28 @@
 extends HTTPRequest
 
+#FIX: random crash after 10 minutes maybe update less monitor values again
 var close_request: bool = false
-var mutex: Mutex = Mutex.new() # TODO for 4.1
-var thread: Thread = Thread.new() # TODO for 4.1
 var monitor_dict: Dictionary = {}
+var thread: Thread = Thread.new()
+var close_thread: Thread = Thread.new()
 
 var config: ConfigFile = ConfigFile.new()
 
 func _ready() -> void:
-	toggle_session()
+	config.load("res://addons/pogr_plugin/pogr.cfg")
+	thread.start(toggle_session)
+	thread.wait_to_finish()
+	thread.start(monitor_update)
 
 func _notification(what) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		get_tree().set_auto_accept_quit(false)
-		toggle_session()
+		close_thread.start(toggle_session)
+		close_thread.wait_to_finish()
+		thread.wait_to_finish()
 		close_request = true
 
 func toggle_session() -> void:
-	config.load("res://addons/pogr_plugin/pogr.cfg")
 	request("http://postman-echo.com/get", ["CLIENT_ID: " + config.get_value("api","client_id",""), "BUILD_ID: " + config.get_value("api","build_id","")], HTTPClient.METHOD_GET)
 
 func _on_request_completed(_result, _response_code, _headers, body) -> void:
@@ -27,12 +32,30 @@ func _on_request_completed(_result, _response_code, _headers, body) -> void:
 	if(close_request):
 		get_tree().quit()
 
-
 func _on_monitor_timer_timeout() -> void:
+	thread.wait_to_finish()
+	thread.start(monitor_update)
+
+func monitor_update() -> void:
 	var sys_monitor_info = pogr_plugin.get_sys_monitor_info()
+	var cpu_percent: String = "unknown"
+	if (OS.get_name() == "Windows"):
+		var cpupercentoutput = []
+		OS.execute("wmic",["cpu", "get", "loadpercentage", "/format:csv"],cpupercentoutput,true)
+		cpu_percent = cpupercentoutput[0].split(",")[2].strip_escapes()
 	monitor_dict = {
-		"Engine": "Godot Engine " + Engine.get_version_info().string,
-		"OS": {
+		"engine": "Godot Engine " + Engine.get_version_info().string,
+		"loaded_objects":{
+			"all": Performance.get_monitor(Performance.OBJECT_COUNT), 
+			"nodes": Performance.get_monitor(Performance.OBJECT_NODE_COUNT),
+			"orphan_nodes": Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT),
+			"resource": Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT),
+			"physics_active": {
+					"2d": Performance.get_monitor(Performance.PHYSICS_2D_ACTIVE_OBJECTS),
+					"3d": Performance.get_monitor(Performance.PHYSICS_3D_ACTIVE_OBJECTS)
+				}
+		},
+		"os": {
 			"name": OS.get_name(),
 			"distro": OS.get_distribution_name(),
 			"version": OS.get_version(),
@@ -44,14 +67,21 @@ func _on_monitor_timer_timeout() -> void:
 		"cpu": {
 			"name": OS.get_processor_name(),
 			"count": OS.get_processor_count(),
-			"percentage": sys_monitor_info.cpu_load_percentage
+			"percentage": cpu_percent,
+			"process_time":{
+				"physics" : Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS),
+				"navigation": Performance.get_monitor(Performance.TIME_NAVIGATION_PROCESS)
+			},
 		},
 		"gpu": {
 			"name": RenderingServer.get_video_adapter_name(),
 			"vendor": RenderingServer.get_video_adapter_vendor(),
 			"driver_info": OS.get_video_adapter_driver_info(),
 			"api_version": RenderingServer.get_video_adapter_api_version(),
-			"fps": Engine.get_frames_per_second()
+			"frame_process_time": Performance.get_monitor(Performance.TIME_PROCESS),
+			"rendered_objects_last_frame": Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME),
+			"video_memory_used": Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED),
+			"fps": Performance.get_monitor(Performance.TIME_FPS)
 		},
 		"memory": {
 			"max_physical": sys_monitor_info.max_phys_memory,
