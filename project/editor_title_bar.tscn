@@ -1,0 +1,188 @@
+[gd_scene format=3 uid="uid://csgwkubyhv6nb"]
+
+[node name="Scene" type="PopupMenu"]
+size = Vector2i(201, 518)
+visible = true
+unfocusable = true
+item_count = 23
+item_0/text = "New Scene"
+item_0/id = 0
+item_1/text = "New Inherited Scene..."
+item_1/id = 1
+item_2/text = "Open Scene..."
+item_2/id = 2
+item_3/text = "Reopen Closed Scene"
+item_3/id = 20
+item_4/text = "Open Recent"
+item_4/id = 15
+item_5/text = ""
+item_5/id = -1
+item_5/separator = true
+item_6/text = "Save Scene"
+item_6/id = 3
+item_7/text = "Save Scene As..."
+item_7/id = 4
+item_8/text = "Save All Scenes"
+item_8/id = 5
+item_9/text = ""
+item_9/id = -1
+item_9/separator = true
+item_10/text = "Quick Open..."
+item_10/id = 17
+item_11/text = "Quick Open Scene..."
+item_11/id = 18
+item_12/text = "Quick Open Script..."
+item_12/id = 19
+item_13/text = ""
+item_13/id = -1
+item_13/separator = true
+item_14/text = "Export As..."
+item_14/id = 14
+item_15/text = ""
+item_15/id = -1
+item_15/separator = true
+item_16/text = "Undo"
+item_16/id = 27
+item_17/text = "Redo"
+item_17/id = 28
+item_17/disabled = true
+item_18/text = ""
+item_18/id = -1
+item_18/separator = true
+item_19/text = "Reload Saved Scene"
+item_19/id = 29
+item_20/text = "Close Scene"
+item_20/id = 21
+item_21/text = ""
+item_21/id = -1
+item_21/separator = true
+item_22/text = "Quit"
+item_22/id = 25
+metadata/_menu_tooltip = "Operations with scene files."
+
+[node name="@MarginContainer@802" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="@ScrollContainer@803" type="ScrollContainer" parent="@MarginContainer@802"]
+layout_mode = 2
+
+[node name="@Control@804" type="Control" parent="@MarginContainer@802/@ScrollContainer@803"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="_h_scroll2" type="HScrollBar" parent="@MarginContainer@802/@ScrollContainer@803"]
+visible = false
+layout_mode = 2
+max_value = 0.0
+
+[node name="_v_scroll2" type="VScrollBar" parent="@MarginContainer@802/@ScrollContainer@803"]
+visible = false
+layout_mode = 2
+max_value = 0.0
+
+[node name="@Timer@805" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="@Timer@806" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="Export" type="PopupMenu" parent="."]
+unfocusable = true
+item_count = 2
+item_0/text = "MeshLibrary..."
+item_0/id = 11
+item_1/text = "glTF 2.0 Scene..."
+item_1/id = 1
+
+[node name="@MarginContainer@4681" type="MarginContainer" parent="Export"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="@ScrollContainer@4682" type="ScrollContainer" parent="Export/@MarginContainer@4681"]
+layout_mode = 2
+
+[node name="@Control@4683" type="Control" parent="Export/@MarginContainer@4681/@ScrollContainer@4682"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="_h_scroll2" type="HScrollBar" parent="Export/@MarginContainer@4681/@ScrollContainer@4682"]
+visible = false
+layout_mode = 2
+max_value = 0.0
+
+[node name="_v_scroll2" type="VScrollBar" parent="Export/@MarginContainer@4681/@ScrollContainer@4682"]
+visible = false
+layout_mode = 2
+max_value = 0.0
+
+[node name="@Timer@4684" type="Timer" parent="Export"]
+wait_time = 0.3
+one_shot = true
+
+[node name="@Timer@4685" type="Timer" parent="Export"]
+wait_time = 0.3
+one_shot = true
+
+[node name="RecentScenes" type="PopupMenu" parent="."]
+size = Vector2i(410, 267)
+unfocusable = true
+item_count = 10
+item_0/text = "editor_title_bar.tscn"
+item_0/id = 0
+item_1/text = "test.tscn"
+item_1/id = 1
+item_2/text = "addons/pogr_plugin/plugin_window.tscn"
+item_2/id = 2
+item_3/text = "addons/pogr_plugin/pogr_settings.tscn"
+item_3/id = 3
+item_4/text = "addons/pogr_plugin/pogr_manager.tscn"
+item_4/id = 4
+item_5/text = "main.tscn"
+item_5/id = 5
+item_6/text = "addons/pogr_plugin/plugin_settings_about_window.tscn"
+item_6/id = 6
+item_7/text = "addons/pogr_plugin/pogr_credits.tscn"
+item_7/id = 7
+item_8/text = ""
+item_8/id = -1
+item_8/separator = true
+item_9/text = "Clear Recent Scenes"
+item_9/id = 9
+
+[node name="@MarginContainer@4686" type="MarginContainer" parent="RecentScenes"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="@ScrollContainer@4687" type="ScrollContainer" parent="RecentScenes/@MarginContainer@4686"]
+layout_mode = 2
+
+[node name="@Control@4688" type="Control" parent="RecentScenes/@MarginContainer@4686/@ScrollContainer@4687"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="_h_scroll2" type="HScrollBar" parent="RecentScenes/@MarginContainer@4686/@ScrollContainer@4687"]
+visible = false
+layout_mode = 2
+max_value = 0.0
+
+[node name="_v_scroll2" type="VScrollBar" parent="RecentScenes/@MarginContainer@4686/@ScrollContainer@4687"]
+visible = false
+layout_mode = 2
+max_value = 0.0
+
+[node name="@Timer@4689" type="Timer" parent="RecentScenes"]
+wait_time = 0.3
+one_shot = true
+
+[node name="@Timer@4690" type="Timer" parent="RecentScenes"]
+wait_time = 0.3
+one_shot = true

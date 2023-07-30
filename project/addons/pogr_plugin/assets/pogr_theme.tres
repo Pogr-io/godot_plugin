@@ -14,10 +14,10 @@ content_margin_top = 12.0
 content_margin_right = 6.0
 content_margin_bottom = 12.0
 bg_color = Color(1, 1, 1, 0.0509804)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1vi6"]
 content_margin_left = 12.0

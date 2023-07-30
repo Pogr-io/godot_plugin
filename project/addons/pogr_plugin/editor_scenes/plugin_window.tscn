@@ -1,0 +1,457 @@
+[gd_scene load_steps=19 format=3 uid="uid://ceibkuwl0n1gk"]
+
+[ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="1_3rw0m"]
+[ext_resource type="Texture2D" uid="uid://foaeaffoier2" path="res://addons/pogr_plugin/assets/ThemeDark-1-Small.png" id="1_gusuq"]
+[ext_resource type="FontFile" uid="uid://bla3553u4v7i4" path="res://addons/pogr_plugin/assets/ubuntu-light.ttf" id="3_qetuk"]
+[ext_resource type="Texture2D" uid="uid://bbat633styiy1" path="res://addons/pogr_plugin/assets/Close.svg" id="4_l2cng"]
+
+[sub_resource type="GDScript" id="GDScript_im3kb"]
+resource_name = "plugin_window"
+script/source = "@tool
+extends Control
+
+signal  save_restart
+signal non_save_restart
+
+var plg_config: ConfigFile = ConfigFile.new()
+
+func _ready():
+	plg_config.load(\"res://addons/pogr_plugin/plugin.cfg\")
+	$Window/Panel/Version/Label.text = \"v\" + plg_config.get_value(\"plugin\",\"version\",\"\")
+	$AnimationPlayer.play(\"fade_in\")
+
+func _on_popup_about_to_popup():
+	$AnimationPlayer.play(\"RESET\")
+
+func _on_restart_pressed():
+	non_save_restart.emit()
+	queue_free()
+
+func _on_save_and_restart_pressed():
+	save_restart.emit()
+	queue_free()
+
+func _on_close_pressed():
+	$AnimationPlayer.speed_scale = 2
+	$AnimationPlayer.play_backwards(\"fade_in\")
+	await  get_tree().create_timer(0.7).timeout
+	queue_free()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dt70x"]
+bg_color = Color(0.203922, 0.203922, 0.266667, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_38ip6"]
+font_size = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16pig"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gc6k1"]
+content_margin_left = 6.0
+content_margin_top = 12.0
+content_margin_right = 6.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0.0509804)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kkaby"]
+bg_color = Color(1, 1, 1, 0.0627451)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qybiv"]
+bg_color = Color(1, 1, 1, 0.0823529)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8bu08"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxnls"]
+bg_color = Color(1, 1, 1, 0.941176)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpqqm"]
+bg_color = Color(1, 1, 1, 0.901961)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_6pxrl"]
+font = ExtResource("3_qetuk")
+font_color = Color(1, 1, 1, 0.392157)
+
+[sub_resource type="Animation" id="Animation_wpohp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Window/Panel:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Window/Panel/Logo/TextureRect:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Window/Panel/Title/Label:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Window/Panel/Text/RichTextLabel:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Window/Panel/Buttons/HBoxContainer/Restart:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Window/Panel/Buttons/HBoxContainer/SaveAndRestart:self_modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_oxyey"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Window/Panel:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Window/Panel/Logo/TextureRect:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Window/Panel/Title/Label:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Window/Panel/Text/RichTextLabel:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Window/Panel/Buttons/HBoxContainer/Restart:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Window/Panel/Buttons/HBoxContainer/SaveAndRestart:self_modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_661e6"]
+_data = {
+"RESET": SubResource("Animation_wpohp"),
+"fade_in": SubResource("Animation_oxyey")
+}
+
+[node name="plugin_window" type="Control" groups=["PogrRestartWindow"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3rw0m")
+script = SubResource("GDScript_im3kb")
+
+[node name="Window" type="Window" parent="."]
+transparent_bg = true
+initial_position = 2
+size = Vector2i(800, 600)
+borderless = true
+transparent = true
+theme = ExtResource("1_3rw0m")
+
+[node name="Panel" type="Panel" parent="Window"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3rw0m")
+theme_override_styles/panel = SubResource("StyleBoxFlat_dt70x")
+
+[node name="Frame" type="MarginContainer" parent="Window/Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -128.0
+offset_bottom = 32.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Window/Panel/Frame"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Close" type="TextureButton" parent="Window/Panel/Frame/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+action_mode = 0
+texture_normal = ExtResource("4_l2cng")
+
+[node name="Logo" type="MarginContainer" parent="Window/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_right = 400.0
+offset_bottom = 136.0
+grow_horizontal = 2
+mouse_filter = 2
+theme = ExtResource("1_3rw0m")
+theme_override_constants/margin_left = 306
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 306
+theme_override_constants/margin_bottom = 48
+
+[node name="TextureRect" type="TextureRect" parent="Window/Panel/Logo"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("1_3rw0m")
+texture = ExtResource("1_gusuq")
+
+[node name="Title" type="MarginContainer" parent="Window/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -252.0
+offset_right = 252.0
+offset_bottom = 602.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 224
+theme_override_constants/margin_bottom = 344
+
+[node name="Label" type="Label" parent="Window/Panel/Title"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Thank you for enabling POGR!"
+label_settings = SubResource("LabelSettings_38ip6")
+horizontal_alignment = 1
+
+[node name="Text" type="MarginContainer" parent="Window/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -252.0
+offset_right = 252.0
+offset_bottom = 760.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 264
+theme_override_constants/margin_bottom = 296
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Window/Panel/Text"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(504, 200)
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.717647, 0.717647, 0.831373, 1)
+theme_override_fonts/normal_font = ExtResource("3_qetuk")
+theme_override_font_sizes/normal_font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxEmpty_16pig")
+bbcode_enabled = true
+text = "[center]In order for the plugin to function properly, you need to restart the editor. 
+Do you want to save your work first?"
+
+[node name="Buttons" type="MarginContainer" parent="Window/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.0
+offset_top = -20.0
+offset_right = 99.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 328
+theme_override_constants/margin_bottom = 224
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Window/Panel/Buttons"]
+layout_mode = 2
+
+[node name="Restart" type="Button" parent="Window/Panel/Buttons/HBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(221, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = ExtResource("1_3rw0m")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_gc6k1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kkaby")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qybiv")
+text = "Restart without saving"
+
+[node name="SaveAndRestart" type="Button" parent="Window/Panel/Buttons/HBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(168, 48)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme = ExtResource("1_3rw0m")
+theme_override_colors/font_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/font_pressed_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/font_hover_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/font_focus_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_8bu08")
+theme_override_styles/hover = SubResource("StyleBoxFlat_sxnls")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fpqqm")
+text = "Save and restart"
+
+[node name="Version" type="MarginContainer" parent="Window/Panel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -22.0
+offset_right = 69.0
+grow_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Label" type="Label" parent="Window/Panel/Version"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "v0.0.1"
+label_settings = SubResource("LabelSettings_6pxrl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_661e6")
+}
+
+[connection signal="about_to_popup" from="Window" to="." method="_on_popup_about_to_popup"]
+[connection signal="pressed" from="Window/Panel/Frame/HBoxContainer/Close" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="Window/Panel/Buttons/HBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Window/Panel/Buttons/HBoxContainer/SaveAndRestart" to="." method="_on_save_and_restart_pressed"]

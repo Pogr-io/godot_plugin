@@ -1,13 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://co21y63e176p6"]
 
-[ext_resource type="Script" path="res://addons/pogr_plugin/pogr_manager.gd" id="1_fog0l"]
+[ext_resource type="Script" path="res://addons/pogr_plugin/editor_scripts/pogr_manager.gd" id="1_bsqx8"]
 
 [node name="POGR_Manager" type="HTTPRequest"]
 process_thread_group = 2
 process_thread_group_order = 1
 process_thread_messages = 0
 use_threads = true
-script = ExtResource("1_fog0l")
+script = ExtResource("1_bsqx8")
 
 [node name="MonitorTimer" type="Timer" parent="."]
 process_thread_group = 2

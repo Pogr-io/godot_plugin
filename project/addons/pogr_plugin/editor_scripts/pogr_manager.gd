@@ -9,7 +9,7 @@ var close_thread: Thread = Thread.new()
 var config: ConfigFile = ConfigFile.new()
 
 func _ready() -> void:
-	config.load("res://addons/pogr_plugin/pogr.cfg")
+	config.load("res://addons/pogr_plugin/pogr_public.cfg")
 	thread.start(toggle_session)
 	thread.wait_to_finish()
 	thread.start(monitor_update)
