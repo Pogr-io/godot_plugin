@@ -1,0 +1,356 @@
+[gd_scene load_steps=17 format=3 uid="uid://bjxwt6nngje1e"]
+
+[ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="1_h8n13"]
+[ext_resource type="Texture2D" uid="uid://bbat633styiy1" path="res://addons/pogr_plugin/assets/Close.svg" id="2_u2a08"]
+[ext_resource type="Texture2D" uid="uid://dron6i1v1wh1v" path="res://addons/pogr_plugin/assets/ThemeDark-1-Smaller.png" id="3_fckep"]
+[ext_resource type="Texture2D" uid="uid://byf0bqt0qj5nd" path="res://addons/pogr_plugin/assets/Menu-item.png" id="4_kha8a"]
+
+[sub_resource type="GDScript" id="GDScript_1o21u"]
+resource_name = "plugin_settings"
+script/source = "@tool
+extends Window
+
+var plg_config: ConfigFile = ConfigFile.new()
+
+func _ready():
+	$AnimationPlayer.clear_caches()
+	$AnimationPlayer.play(\"fade_in\")
+
+func _on_close_pressed():
+	$AnimationPlayer.speed_scale = 2
+	$AnimationPlayer.play_backwards(\"fade_in\")
+	await  get_tree().create_timer(0.2).timeout
+	queue_free()
+
+func _on_move_dragger_gui_input(event):
+	if($PanelContainer/MoveDragger.button_pressed && event is InputEventMouseMotion):
+		position = DisplayServer.mouse_get_position()
+
+func press_sidebar(tab: int):
+	print(tab)
+	$PanelContainer/TabContainer.current_tab = tab
+	match tab:
+		0:
+			$PanelContainer/Sidebar/VBoxContainer/POGR.button_pressed = true
+		1:
+			$PanelContainer/Sidebar/VBoxContainer/Payloads.button_pressed = true
+		2:
+			$PanelContainer/Sidebar/VBoxContainer/Settings.button_pressed = true
+		3:
+			$PanelContainer/Sidebar/VBoxContainer/Credits.button_pressed = true
+
+func _on_pogr_pressed(): press_sidebar(0)
+
+func _on_payloads_pressed(): press_sidebar(1)
+
+func _on_settings_pressed(): press_sidebar(2)
+
+func _on_credits_pressed(): press_sidebar(3)
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dt70x"]
+bg_color = Color(0.203922, 0.203922, 0.266667, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ipegb"]
+bg_color = Color(0.160784, 0.160784, 0.211765, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mbwjw"]
+content_margin_left = 24.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c5iso"]
+content_margin_left = 24.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vuowu"]
+content_margin_left = 24.0
+texture = ExtResource("4_kha8a")
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_0ifyn"]
+resource_name = "sidebar"
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pfg2i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2dt4h"]
+
+[sub_resource type="Animation" id="Animation_n8mly"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_72lq6"]
+resource_name = "fade_in"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:self_modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mm1dk"]
+_data = {
+"RESET": SubResource("Animation_n8mly"),
+"fade_in": SubResource("Animation_72lq6")
+}
+
+[node name="plugin_settings" type="Window" groups=["PogrSettingsWindows"]]
+transparent_bg = true
+initial_position = 2
+size = Vector2i(800, 600)
+transient = true
+exclusive = true
+borderless = true
+transparent = true
+extend_to_title = true
+theme = ExtResource("1_h8n13")
+script = SubResource("GDScript_1o21u")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+clip_children = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_h8n13")
+theme_override_styles/panel = SubResource("StyleBoxFlat_dt70x")
+
+[node name="Sidebar" type="PanelContainer" parent="PanelContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ipegb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Sidebar"]
+layout_mode = 2
+
+[node name="Logo" type="MarginContainer" parent="PanelContainer/Sidebar/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 66
+theme_override_constants/margin_bottom = 28
+
+[node name="Logo" type="TextureRect" parent="PanelContainer/Sidebar/VBoxContainer/Logo"]
+layout_mode = 2
+texture = ExtResource("3_fckep")
+
+[node name="POGR" type="Button" parent="PanelContainer/Sidebar/VBoxContainer"]
+custom_minimum_size = Vector2(152, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.517647, 0.517647, 0.647059, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_mbwjw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_c5iso")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vuowu")
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_0ifyn")
+text = "POGR"
+alignment = 0
+
+[node name="Payloads" type="Button" parent="PanelContainer/Sidebar/VBoxContainer"]
+custom_minimum_size = Vector2(152, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.517647, 0.517647, 0.647059, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_mbwjw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_c5iso")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vuowu")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_0ifyn")
+text = "Payloads"
+alignment = 0
+
+[node name="Settings" type="Button" parent="PanelContainer/Sidebar/VBoxContainer"]
+custom_minimum_size = Vector2(152, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.517647, 0.517647, 0.647059, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_mbwjw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_c5iso")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vuowu")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_0ifyn")
+text = "Settings"
+alignment = 0
+
+[node name="Credits" type="Button" parent="PanelContainer/Sidebar/VBoxContainer"]
+custom_minimum_size = Vector2(152, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.517647, 0.517647, 0.647059, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_mbwjw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_c5iso")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vuowu")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_0ifyn")
+text = "Credits"
+alignment = 0
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pfg2i")
+tabs_visible = false
+
+[node name="POGR" type="Control" parent="PanelContainer/TabContainer"]
+custom_minimum_size = Vector2(600, 600)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/POGR"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2dt4h")
+text = "general window"
+
+[node name="Payloads" type="Control" parent="PanelContainer/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(600, 600)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/Payloads"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2dt4h")
+text = "here are payloads"
+
+[node name="Settings" type="Control" parent="PanelContainer/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(600, 600)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/Settings"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2dt4h")
+text = "set the settings"
+
+[node name="Credits" type="Control" parent="PanelContainer/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(600, 600)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/Credits"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2dt4h")
+text = "credits to me"
+
+[node name="MoveDragger" type="Button" parent="PanelContainer"]
+custom_minimum_size = Vector2(800, 20)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_default_cursor_shape = 13
+flat = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="Close" type="TextureButton" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+action_mode = 0
+texture_normal = ExtResource("2_u2a08")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mm1dk")
+}
+
+[connection signal="close_requested" from="." to="." method="_on_close_pressed"]
+[connection signal="pressed" from="PanelContainer/Sidebar/VBoxContainer/POGR" to="." method="_on_pogr_pressed"]
+[connection signal="pressed" from="PanelContainer/Sidebar/VBoxContainer/Payloads" to="." method="_on_payloads_pressed"]
+[connection signal="pressed" from="PanelContainer/Sidebar/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="PanelContainer/Sidebar/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
+[connection signal="gui_input" from="PanelContainer/MoveDragger" to="." method="_on_move_dragger_gui_input"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Close" to="." method="_on_close_pressed"]

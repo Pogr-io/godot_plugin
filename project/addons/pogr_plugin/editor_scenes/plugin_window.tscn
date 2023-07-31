@@ -315,29 +315,6 @@ grow_vertical = 2
 theme = ExtResource("1_3rw0m")
 theme_override_styles/panel = SubResource("StyleBoxFlat_dt70x")
 
-[node name="MoveDragger" type="Button" parent="Window/Panel"]
-custom_minimum_size = Vector2(800, 50)
-layout_mode = 2
-offset_right = 800.0
-offset_bottom = 50.0
-mouse_default_cursor_shape = 13
-flat = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Window/Panel"]
-layout_mode = 2
-offset_left = 760.0
-offset_right = 800.0
-offset_bottom = 32.0
-size_flags_horizontal = 8
-
-[node name="Close" type="TextureButton" parent="Window/Panel/HBoxContainer"]
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-action_mode = 0
-texture_normal = ExtResource("4_l2cng")
-
 [node name="Logo" type="MarginContainer" parent="Window/Panel"]
 layout_mode = 1
 anchors_preset = 7
@@ -482,13 +459,38 @@ mouse_filter = 1
 text = "v0.0.1"
 label_settings = SubResource("LabelSettings_6pxrl")
 
+[node name="MoveDragger" type="Button" parent="Window/Panel"]
+custom_minimum_size = Vector2(800, 20)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 12.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 13
+flat = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Window/Panel"]
+layout_mode = 2
+offset_left = 760.0
+offset_right = 800.0
+offset_bottom = 32.0
+size_flags_horizontal = 8
+
+[node name="Close" type="TextureButton" parent="Window/Panel/HBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+action_mode = 0
+texture_normal = ExtResource("4_l2cng")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_661e6")
 }
 
 [connection signal="about_to_popup" from="Window" to="." method="_on_popup_about_to_popup"]
-[connection signal="gui_input" from="Window/Panel/MoveDragger" to="." method="_on_move_dragger_gui_input"]
-[connection signal="pressed" from="Window/Panel/HBoxContainer/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="Window/Panel/Buttons/HBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="Window/Panel/Buttons/HBoxContainer/SaveAndRestart" to="." method="_on_save_and_restart_pressed"]
+[connection signal="gui_input" from="Window/Panel/MoveDragger" to="." method="_on_move_dragger_gui_input"]
+[connection signal="pressed" from="Window/Panel/HBoxContainer/Close" to="." method="_on_close_pressed"]
