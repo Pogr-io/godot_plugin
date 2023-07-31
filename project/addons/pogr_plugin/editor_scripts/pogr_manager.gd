@@ -9,10 +9,13 @@ var close_thread: Thread = Thread.new()
 var config: ConfigFile = ConfigFile.new()
 
 func _ready() -> void:
-	config.load("res://addons/pogr_plugin/pogr_public.cfg")
-	thread.start(toggle_session)
-	thread.wait_to_finish()
-	thread.start(monitor_update)
+	config.load("res://addons/pogr_plugin/save/config.pogr")
+	if((config.has_section_key("api","client_id") && config.has_section_key("api","build_id"))):
+		thread.start(toggle_session)
+		thread.wait_to_finish()
+		thread.start(monitor_update)
+	else:
+		push_warning("The POGR plugin is enabled but is not properly setup! (client_id && build_id)")
 
 func _notification(what) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
