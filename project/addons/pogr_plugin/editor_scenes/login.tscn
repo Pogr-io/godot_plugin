@@ -1,0 +1,312 @@
+[gd_scene load_steps=20 format=3 uid="uid://cykjmy6m6henf"]
+
+[ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="1_n7ixn"]
+[ext_resource type="Texture2D" uid="uid://foaeaffoier2" path="res://addons/pogr_plugin/assets/ThemeDark-1-Small.png" id="2_n3h45"]
+[ext_resource type="FontFile" uid="uid://bla3553u4v7i4" path="res://addons/pogr_plugin/assets/ubuntu-light.ttf" id="3_tddt8"]
+[ext_resource type="Texture2D" uid="uid://cnjivbngpmbjl" path="res://addons/pogr_plugin/assets/Text field.png" id="3_vk2f2"]
+[ext_resource type="Texture2D" uid="uid://cyuay25e2awvn" path="res://addons/pogr_plugin/assets/artwork_bar1.png" id="4_21gek"]
+[ext_resource type="Texture2D" uid="uid://baoocmx8a4kv" path="res://addons/pogr_plugin/assets/checkbox_on_dark.png" id="4_jqnas"]
+[ext_resource type="Texture2D" uid="uid://bbat633styiy1" path="res://addons/pogr_plugin/assets/Close.svg" id="4_odwa6"]
+
+[sub_resource type="GDScript" id="GDScript_xx7jv"]
+resource_name = "login"
+script/source = "@tool
+extends Window
+
+var plg_config: ConfigFile = ConfigFile.new()
+
+func _ready():
+	plg_config.load(\"res://addons/pogr_plugin/plugin.cfg\")
+	$Version/Label.text = \"v\" + plg_config.get_value(\"plugin\",\"version\",\"\")
+	$AnimationPlayer.play(\"fade_in\")
+
+
+func _on_close_pressed():
+	$AnimationPlayer.play_backwards(\"fade_in\")
+	await  get_tree().create_timer(0.3).timeout
+	queue_free()
+
+
+func _on_move_dragger_gui_input(event):
+	if($PanelContainer/MoveDragger.button_pressed && event is InputEventMouseMotion):
+		position = DisplayServer.mouse_get_position()
+
+
+func _on_email_text_changed(_new_text):
+	pass # Replace with function body.
+
+
+func _on_email_text_submitted(_new_text):
+	pass # Replace with function body.
+
+
+func _on_password_text_changed(_new_text):
+	pass # Replace with function body.
+
+
+func _on_password_text_submitted(_new_text):
+	pass # Replace with function body.
+
+
+func _on_check_box_toggled(_button_pressed):
+	pass # Replace with function body.
+
+
+func _on_login_pressed():
+	plg_config.set_value(\"plugin\",\"logged_out\",false)
+	plg_config.save(\"res://addons/pogr_plugin/plugin.cfg\")
+	$AnimationPlayer.play_backwards(\"fade_in\")
+	await  get_tree().create_timer(0.3).timeout
+	queue_free()
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dt70x"]
+bg_color = Color(0.203922, 0.203922, 0.266667, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_3t1jp"]
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_o5cbv"]
+font_size = 18
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2ifsn"]
+content_margin_left = 16.0
+content_margin_top = 14.0
+content_margin_right = 16.0
+content_margin_bottom = 14.0
+texture = ExtResource("3_vk2f2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivju1"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ex4v"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0.901961)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_135pk"]
+texture = ExtResource("4_21gek")
+
+[sub_resource type="LabelSettings" id="LabelSettings_6pxrl"]
+font = ExtResource("3_tddt8")
+font_color = Color(1, 1, 1, 0.392157)
+
+[sub_resource type="Animation" id="Animation_3dpol"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_54goi"]
+resource_name = "fade_in"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yiwse"]
+_data = {
+"RESET": SubResource("Animation_3dpol"),
+"fade_in": SubResource("Animation_54goi")
+}
+
+[node name="Login" type="Window"]
+transparent_bg = true
+initial_position = 2
+size = Vector2i(800, 600)
+transient = true
+borderless = true
+transparent = true
+extend_to_title = true
+theme = ExtResource("1_n7ixn")
+script = SubResource("GDScript_xx7jv")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+clip_children = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_n7ixn")
+theme_override_styles/panel = SubResource("StyleBoxFlat_dt70x")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 328
+theme_override_constants/margin_top = 48
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("2_n3h45")
+
+[node name="Title" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 48
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Title"]
+layout_mode = 2
+text = "First, you to access your account"
+label_settings = SubResource("LabelSettings_3t1jp")
+
+[node name="EmailLabel" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 32
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/EmailLabel"]
+layout_mode = 2
+mouse_filter = 1
+text = "Email"
+label_settings = SubResource("LabelSettings_o5cbv")
+
+[node name="Email" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(255, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_2ifsn")
+placeholder_text = "Email adress..."
+
+[node name="PasswordLabel" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 32
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/PasswordLabel"]
+layout_mode = 2
+mouse_filter = 1
+text = "Password"
+label_settings = SubResource("LabelSettings_o5cbv")
+
+[node name="Password" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(255, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxTexture_2ifsn")
+placeholder_text = "••••••••"
+secret = true
+
+[node name="RememberMe" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="CheckBox" type="CheckBox" parent="PanelContainer/MarginContainer/VBoxContainer/RememberMe"]
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_icons/checked = ExtResource("4_jqnas")
+button_pressed = true
+text = "Remember me"
+
+[node name="Login" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/font_pressed_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/font_hover_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/font_focus_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_ivju1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8ex4v")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ivju1")
+text = "Sign in"
+
+[node name="MoveDragger" type="Button" parent="PanelContainer"]
+custom_minimum_size = Vector2(800, 20)
+layout_mode = 2
+size_flags_vertical = 0
+mouse_default_cursor_shape = 13
+flat = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Close" type="TextureButton" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+action_mode = 0
+texture_normal = ExtResource("4_odwa6")
+
+[node name="Artwork" type="Panel" parent="PanelContainer"]
+custom_minimum_size = Vector2(288, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_135pk")
+
+[node name="Version" type="MarginContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -38.0
+offset_right = 59.0
+grow_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Label" type="Label" parent="Version"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+mouse_filter = 1
+text = "v0.0.1"
+label_settings = SubResource("LabelSettings_6pxrl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yiwse")
+}
+
+[connection signal="text_changed" from="PanelContainer/MarginContainer/VBoxContainer/Email" to="." method="_on_email_text_changed"]
+[connection signal="text_submitted" from="PanelContainer/MarginContainer/VBoxContainer/Email" to="." method="_on_email_text_submitted"]
+[connection signal="text_changed" from="PanelContainer/MarginContainer/VBoxContainer/Password" to="." method="_on_password_text_changed"]
+[connection signal="text_submitted" from="PanelContainer/MarginContainer/VBoxContainer/Password" to="." method="_on_password_text_submitted"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/RememberMe/CheckBox" to="." method="_on_check_box_toggled"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Login" to="." method="_on_login_pressed"]
+[connection signal="gui_input" from="PanelContainer/MoveDragger" to="." method="_on_move_dragger_gui_input"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/Close" to="." method="_on_close_pressed"]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://otoyugotn2af"]
 
-[ext_resource type="Script" path="res://addons/pogr_plugin/editor_scripts/pogr_settings.gd" id="1_sl8jl"]
-[ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="2_pswpx"]
-[ext_resource type="Texture2D" uid="uid://c2je4tk5785r1" path="res://addons/pogr_plugin/assets/ThemeDark-1.png" id="3_7k0wg"]
+[ext_resource type="Script" path="res://addons/pogr_plugin/editor_scripts/pogr_settings.gd" id="1_rtf7k"]
+[ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="2_kwwui"]
+[ext_resource type="Texture2D" uid="uid://c2je4tk5785r1" path="res://addons/pogr_plugin/assets/ThemeDark-1.png" id="3_4vsn2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahp7u"]
 bg_color = Color(0.160784, 0.160784, 0.211765, 1)
@@ -21,7 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_sl8jl")
+script = ExtResource("1_rtf7k")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -78,7 +78,7 @@ columns = 2
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 theme_override_colors/font_color = Color(1, 1, 1, 0.639216)
 text = "Client ID"
 
@@ -86,13 +86,13 @@ text = "Client ID"
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 text = "imagineyourclientidhere"
 
 [node name="LabelBldID" type="Label" parent="Panel/MarginContainer/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 theme_override_colors/font_color = Color(1, 1, 1, 0.639216)
 text = "Build ID     "
 
@@ -100,7 +100,7 @@ text = "Build ID     "
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 text = "buildidtheree"
 
 [node name="CheckButton" type="CheckButton" parent="Panel"]
@@ -109,7 +109,7 @@ offset_left = 84.0
 offset_top = 454.0
 offset_right = 384.0
 offset_bottom = 474.0
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 
 [node name="Button" type="Button" parent="Panel"]
 layout_mode = 2
@@ -121,7 +121,7 @@ offset_left = -165.843
 offset_top = 38.265
 offset_right = -165.874
 offset_bottom = 38.2569
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 action_mode = 0
 text = "button"
 
@@ -136,7 +136,7 @@ offset_left = -71.664
 offset_top = 66.76
 offset_right = -72.39
 offset_bottom = 66.858
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 
 [node name="OptionButton" type="OptionButton" parent="Panel"]
 layout_mode = 1
@@ -149,7 +149,7 @@ offset_left = -101.78
 offset_top = 3.58002
 offset_right = -101.439
 offset_bottom = 10.965
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 
 [node name="Panel2" type="Panel" parent="Panel"]
 layout_mode = 1
@@ -161,7 +161,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_5jkhp")
 [node name="Sprite2D" type="Sprite2D" parent="Panel/Panel2"]
 position = Vector2(67.0175, 31.95)
 scale = Vector2(0.117544, 0.117544)
-texture = ExtResource("3_7k0wg")
+texture = ExtResource("3_4vsn2")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 title = "About POGR"
@@ -169,7 +169,7 @@ initial_position = 2
 size = Vector2i(396, 239)
 exclusive = false
 unresizable = true
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 ok_button_text = "View Credits"
 dialog_text = "
 
@@ -183,7 +183,7 @@ dialog_close_on_escape = false
 [node name="Sprite2D" type="Sprite2D" parent="AcceptDialog"]
 position = Vector2(187, 40)
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("3_7k0wg")
+texture = ExtResource("3_4vsn2")
 
 [node name="Credits" type="Window" parent="."]
 title = "POGR Credits"
@@ -191,7 +191,7 @@ initial_position = 2
 size = Vector2i(720, 360)
 visible = false
 min_size = Vector2i(720, 360)
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 
 [node name="Control" type="Control" parent="Credits"]
 layout_mode = 3
@@ -208,7 +208,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("2_pswpx")
+theme = ExtResource("2_kwwui")
 bbcode_enabled = true
 text = "[center]
 [img=60]res://addons/pogr_plugin/assets/ThemeDark.png[/img]

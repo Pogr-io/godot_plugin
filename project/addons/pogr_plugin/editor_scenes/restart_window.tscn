@@ -1,9 +1,9 @@
 [gd_scene load_steps=19 format=3 uid="uid://ceibkuwl0n1gk"]
 
-[ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="1_3rw0m"]
-[ext_resource type="Texture2D" uid="uid://foaeaffoier2" path="res://addons/pogr_plugin/assets/ThemeDark-1-Small.png" id="1_gusuq"]
-[ext_resource type="FontFile" uid="uid://bla3553u4v7i4" path="res://addons/pogr_plugin/assets/ubuntu-light.ttf" id="3_qetuk"]
-[ext_resource type="Texture2D" uid="uid://bbat633styiy1" path="res://addons/pogr_plugin/assets/Close.svg" id="4_l2cng"]
+[ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="1_1ljpu"]
+[ext_resource type="Texture2D" uid="uid://foaeaffoier2" path="res://addons/pogr_plugin/assets/ThemeDark-1-Small.png" id="2_vwmpg"]
+[ext_resource type="FontFile" uid="uid://bla3553u4v7i4" path="res://addons/pogr_plugin/assets/ubuntu-light.ttf" id="3_hfvys"]
+[ext_resource type="Texture2D" uid="uid://bbat633styiy1" path="res://addons/pogr_plugin/assets/Close.svg" id="4_mie3p"]
 
 [sub_resource type="GDScript" id="GDScript_im3kb"]
 resource_name = "plugin_window"
@@ -20,9 +20,6 @@ func _ready():
 	$Window/Panel/Version/Label.text = \"v\" + plg_config.get_value(\"plugin\",\"version\",\"\")
 	$AnimationPlayer.play(\"fade_in\")
 
-func _on_popup_about_to_popup():
-	$AnimationPlayer.play(\"RESET\")
-
 func _on_restart_pressed():
 	non_save_restart.emit()
 	queue_free()
@@ -32,7 +29,7 @@ func _on_save_and_restart_pressed():
 	queue_free()
 
 func _on_close_pressed():
-	$AnimationPlayer.speed_scale = 2
+	$AnimationPlayer.speed_scale = 3
 	$AnimationPlayer.play_backwards(\"fade_in\")
 	await  get_tree().create_timer(0.7).timeout
 	queue_free()
@@ -88,21 +85,21 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxnls"]
-bg_color = Color(1, 1, 1, 0.941176)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpqqm"]
 bg_color = Color(1, 1, 1, 0.901961)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpqqm"]
+bg_color = Color(1, 1, 1, 0.862745)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="LabelSettings" id="LabelSettings_6pxrl"]
-font = ExtResource("3_qetuk")
+font = ExtResource("3_hfvys")
 font_color = Color(1, 1, 1, 0.392157)
 
 [sub_resource type="Animation" id="Animation_wpohp"]
@@ -117,83 +114,12 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Window/Panel/Logo/TextureRect:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Window/Panel/Title/Label:self_modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Window/Panel/Text/RichTextLabel:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Window/Panel/Buttons/HBoxContainer/Restart:self_modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Window/Panel/Buttons/HBoxContainer/SaveAndRestart:self_modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Window/Panel/HBoxContainer/Close:self_modulate")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_oxyey"]
 resource_name = "fade_in"
+length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -201,78 +127,6 @@ tracks/0/path = NodePath("Window/Panel:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Window/Panel/Logo/TextureRect:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.1, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Window/Panel/Title/Label:self_modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Window/Panel/Text/RichTextLabel:self_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Window/Panel/Buttons/HBoxContainer/Restart:self_modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Window/Panel/Buttons/HBoxContainer/SaveAndRestart:self_modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Window/Panel/HBoxContainer/Close:self_modulate")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0, 0.7),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
@@ -292,7 +146,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_3rw0m")
+theme = ExtResource("1_1ljpu")
 script = SubResource("GDScript_im3kb")
 
 [node name="Window" type="Window" parent="."]
@@ -304,15 +158,17 @@ borderless = true
 always_on_top = true
 transparent = true
 extend_to_title = true
-theme = ExtResource("1_3rw0m")
+theme = ExtResource("1_1ljpu")
 
 [node name="Panel" type="Panel" parent="Window"]
+self_modulate = Color(1, 1, 1, 0)
+clip_children = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_3rw0m")
+theme = ExtResource("1_1ljpu")
 theme_override_styles/panel = SubResource("StyleBoxFlat_dt70x")
 
 [node name="Logo" type="MarginContainer" parent="Window/Panel"]
@@ -328,16 +184,15 @@ offset_right = 400.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
-theme = ExtResource("1_3rw0m")
+theme = ExtResource("1_1ljpu")
 theme_override_constants/margin_left = 306
 theme_override_constants/margin_right = 306
 theme_override_constants/margin_bottom = 512
 
 [node name="TextureRect" type="TextureRect" parent="Window/Panel/Logo"]
-self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-theme = ExtResource("1_3rw0m")
-texture = ExtResource("1_gusuq")
+theme = ExtResource("1_1ljpu")
+texture = ExtResource("2_vwmpg")
 
 [node name="Title" type="MarginContainer" parent="Window/Panel"]
 layout_mode = 1
@@ -351,7 +206,6 @@ grow_vertical = 0
 theme_override_constants/margin_bottom = 344
 
 [node name="Label" type="Label" parent="Window/Panel/Title"]
-self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
@@ -373,12 +227,11 @@ theme_override_constants/margin_top = 264
 theme_override_constants/margin_bottom = 296
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Window/Panel/Text"]
-self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(504, 200)
 layout_mode = 2
 mouse_filter = 1
 theme_override_colors/default_color = Color(0.717647, 0.717647, 0.831373, 1)
-theme_override_fonts/normal_font = ExtResource("3_qetuk")
+theme_override_fonts/normal_font = ExtResource("3_hfvys")
 theme_override_font_sizes/normal_font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxEmpty_16pig")
 bbcode_enabled = true
@@ -405,12 +258,12 @@ theme_override_constants/margin_bottom = 224
 layout_mode = 2
 
 [node name="Restart" type="Button" parent="Window/Panel/Buttons/HBoxContainer"]
-self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(221, 48)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
-theme = ExtResource("1_3rw0m")
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_1ljpu")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
@@ -423,12 +276,12 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_qybiv")
 text = "Restart without saving"
 
 [node name="SaveAndRestart" type="Button" parent="Window/Panel/Buttons/HBoxContainer"]
-self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(168, 48)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
-theme = ExtResource("1_3rw0m")
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_1ljpu")
 theme_override_colors/font_color = Color(0.101961, 0.101961, 0.133333, 1)
 theme_override_colors/font_pressed_color = Color(0.101961, 0.101961, 0.133333, 1)
 theme_override_colors/font_hover_color = Color(0.101961, 0.101961, 0.133333, 1)
@@ -477,19 +330,17 @@ offset_bottom = 32.0
 size_flags_horizontal = 8
 
 [node name="Close" type="TextureButton" parent="Window/Panel/HBoxContainer"]
-self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 action_mode = 0
-texture_normal = ExtResource("4_l2cng")
+texture_normal = ExtResource("4_mie3p")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_661e6")
 }
 
-[connection signal="about_to_popup" from="Window" to="." method="_on_popup_about_to_popup"]
 [connection signal="pressed" from="Window/Panel/Buttons/HBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="Window/Panel/Buttons/HBoxContainer/SaveAndRestart" to="." method="_on_save_and_restart_pressed"]
 [connection signal="gui_input" from="Window/Panel/MoveDragger" to="." method="_on_move_dragger_gui_input"]

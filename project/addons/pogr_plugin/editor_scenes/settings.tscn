@@ -1,16 +1,14 @@
 [gd_scene load_steps=17 format=3 uid="uid://bjxwt6nngje1e"]
 
-[ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="1_h8n13"]
-[ext_resource type="Texture2D" uid="uid://bbat633styiy1" path="res://addons/pogr_plugin/assets/Close.svg" id="2_u2a08"]
-[ext_resource type="Texture2D" uid="uid://dron6i1v1wh1v" path="res://addons/pogr_plugin/assets/ThemeDark-1-Smaller.png" id="3_fckep"]
-[ext_resource type="Texture2D" uid="uid://byf0bqt0qj5nd" path="res://addons/pogr_plugin/assets/Menu-item.png" id="4_kha8a"]
+[ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="1_jhpgo"]
+[ext_resource type="Texture2D" uid="uid://dron6i1v1wh1v" path="res://addons/pogr_plugin/assets/ThemeDark-1-Smaller.png" id="2_sx7fk"]
+[ext_resource type="Texture2D" uid="uid://byf0bqt0qj5nd" path="res://addons/pogr_plugin/assets/Menu-item.png" id="3_qbhl8"]
+[ext_resource type="Texture2D" uid="uid://bbat633styiy1" path="res://addons/pogr_plugin/assets/Close.svg" id="4_258m7"]
 
 [sub_resource type="GDScript" id="GDScript_1o21u"]
 resource_name = "plugin_settings"
 script/source = "@tool
 extends Window
-
-var plg_config: ConfigFile = ConfigFile.new()
 
 func _ready():
 	$AnimationPlayer.clear_caches()
@@ -27,7 +25,6 @@ func _on_move_dragger_gui_input(event):
 		position = DisplayServer.mouse_get_position()
 
 func press_sidebar(tab: int):
-	print(tab)
 	$PanelContainer/TabContainer.current_tab = tab
 	match tab:
 		0:
@@ -70,7 +67,7 @@ content_margin_left = 24.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vuowu"]
 content_margin_left = 24.0
-texture = ExtResource("4_kha8a")
+texture = ExtResource("3_qbhl8")
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_0ifyn"]
 resource_name = "sidebar"
@@ -125,7 +122,7 @@ exclusive = true
 borderless = true
 transparent = true
 extend_to_title = true
-theme = ExtResource("1_h8n13")
+theme = ExtResource("1_jhpgo")
 script = SubResource("GDScript_1o21u")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -142,7 +139,7 @@ offset_right = 400.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_h8n13")
+theme = ExtResource("1_jhpgo")
 theme_override_styles/panel = SubResource("StyleBoxFlat_dt70x")
 
 [node name="Sidebar" type="PanelContainer" parent="PanelContainer"]
@@ -164,7 +161,7 @@ theme_override_constants/margin_bottom = 28
 
 [node name="Logo" type="TextureRect" parent="PanelContainer/Sidebar/VBoxContainer/Logo"]
 layout_mode = 2
-texture = ExtResource("3_fckep")
+texture = ExtResource("2_sx7fk")
 
 [node name="POGR" type="Button" parent="PanelContainer/Sidebar/VBoxContainer"]
 custom_minimum_size = Vector2(152, 40)
@@ -340,7 +337,7 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 action_mode = 0
-texture_normal = ExtResource("2_u2a08")
+texture_normal = ExtResource("4_258m7")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

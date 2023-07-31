@@ -7,7 +7,7 @@ var entry_btn: PopupMenu
 
 func _enable_plugin() -> void:
 	add_autoload_singleton("POGR_Manager","res://addons/pogr_plugin/autoloads/pogr_manager.tscn")
-	pogrwindow = preload("res://addons/pogr_plugin/editor_scenes/plugin_window.tscn").instantiate()
+	pogrwindow = preload("res://addons/pogr_plugin/editor_scenes/restart_window.tscn").instantiate()
 	add_control_to_container(EditorPlugin.CONTAINER_CANVAS_EDITOR_MENU,pogrwindow)
 	pogrwindow.connect("save_restart",save_restart)
 	pogrwindow.connect("non_save_restart",restart)
