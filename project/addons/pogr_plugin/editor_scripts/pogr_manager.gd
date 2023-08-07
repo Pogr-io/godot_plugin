@@ -29,11 +29,12 @@ func toggle_session() -> void:
 	request("http://postman-echo.com/get", ["CLIENT_ID: " + config.get_value("api","client_id",""), "BUILD_ID: " + config.get_value("api","build_id","")], HTTPClient.METHOD_GET)
 
 func _on_request_completed(_result, _response_code, _headers, body) -> void:
-	var json: Dictionary = JSON.parse_string(body.get_string_from_utf8())
-	if(json["headers"]):
-		print(json["headers"])
-	if(close_request):
-		get_tree().quit()
+	if(body):
+		var json: Dictionary = JSON.parse_string(body.get_string_from_utf8())
+		if(json["headers"]):
+			print(json["headers"])
+		if(close_request):
+			get_tree().quit()
 
 func _on_monitor_timer_timeout() -> void:
 	thread.wait_to_finish()
@@ -118,4 +119,11 @@ func monitor_update() -> void:
 		monitor_dict.merge({"build_type": "debug"})
 	elif(OS.has_feature("release")):
 		monitor_dict.merge({"build_type": "release"})
+	var config: ConfigFile = ConfigFile.new()
+	config.load("user://payloads.pgrp")
+	if(config.has_section_key("monitor","0")):
+		config.set_value("monitor",str(config.get_section_keys("monitor").size()),monitor_dict)
+	else:
+		config.set_value("monitor","0",monitor_dict)
+	config.save("user://payloads.pgrp")
 	print(monitor_dict)

@@ -478,9 +478,9 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
 
 [node name="Logo" type="Sprite2D" parent="CanvasLayer/CenterContainer"]
-position = Vector2(32, 32)
 texture = ExtResource("2_8oi05")
 
 [node name="Control" type="Control" parent="CanvasLayer"]

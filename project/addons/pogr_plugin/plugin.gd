@@ -6,6 +6,8 @@ var editor_menu_bar: MenuBar
 var entry_btn: PopupMenu
 
 func _enable_plugin() -> void:
+	if FileAccess.file_exists(ProjectSettings.globalize_path("res://") + "addons/pogr_plugin/assets/.gdignore"):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path("res://") + "addons/pogr_plugin/assets/.gdignore")
 	add_autoload_singleton("POGR_Manager","res://addons/pogr_plugin/autoloads/pogr_manager.tscn")
 	await get_tree().create_timer(0.2).timeout
 	pogrwindow = preload("res://addons/pogr_plugin/editor_scenes/restart_window.tscn").instantiate()
@@ -13,7 +15,7 @@ func _enable_plugin() -> void:
 	pogrwindow.connect("save_restart",save_restart)
 	pogrwindow.connect("non_save_restart",restart)
 	push_warning("POGR: PLEASE RESTART THE EDITOR")
-
+	#FileAccess.open("res://addons/pogr_plugin/assets/.gdignore",FileAccess.WRITE)
 
 func _enter_tree():
 	if(get_tree().root.has_node("@EditorNode@17638")):
@@ -22,6 +24,8 @@ func _enter_tree():
 		editor_menu_bar.add_child(entry_btn)
 
 func _disable_plugin() -> void:
+	if FileAccess.file_exists(ProjectSettings.globalize_path("res://") + "addons/pogr_plugin/assets/.gdignore"):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path("res://") + "addons/pogr_plugin/assets/.gdignore")
 	if(get_tree().root.has_node("@EditorNode@17638")):
 		entry_btn.queue_free()
 	remove_autoload_singleton("POGR_Manager")

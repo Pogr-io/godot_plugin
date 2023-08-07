@@ -1,19 +1,29 @@
-[gd_scene load_steps=43 format=3 uid="uid://bjxwt6nngje1e"]
+[gd_scene load_steps=77 format=3 uid="uid://bjxwt6nngje1e"]
 
 [ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="1_jhpgo"]
 [ext_resource type="Texture2D" uid="uid://dron6i1v1wh1v" path="res://addons/pogr_plugin/assets/ThemeDark-1-Smaller.png" id="2_sx7fk"]
 [ext_resource type="Texture2D" uid="uid://byf0bqt0qj5nd" path="res://addons/pogr_plugin/assets/Menu-item.png" id="3_qbhl8"]
 [ext_resource type="Texture2D" uid="uid://bbat633styiy1" path="res://addons/pogr_plugin/assets/Close.svg" id="4_258m7"]
 [ext_resource type="Texture2D" uid="uid://ce2d8p3uyp5n1" path="res://addons/pogr_plugin/assets/artwork_bar2.png" id="4_664lm"]
+[ext_resource type="Texture2D" uid="uid://bmafpxcuphrmx" path="res://addons/pogr_plugin/assets/placeholder-game.png" id="4_kdul7"]
 [ext_resource type="Texture2D" uid="uid://cyuay25e2awvn" path="res://addons/pogr_plugin/assets/artwork_bar1.png" id="5_hac4u"]
+[ext_resource type="FontFile" uid="uid://bla3553u4v7i4" path="res://addons/pogr_plugin/assets/ubuntu-light.ttf" id="6_msd47"]
 [ext_resource type="Texture2D" uid="uid://foaeaffoier2" path="res://addons/pogr_plugin/assets/ThemeDark-1-Small.png" id="6_vyuji"]
 [ext_resource type="Texture2D" uid="uid://cnjivbngpmbjl" path="res://addons/pogr_plugin/assets/Text field.png" id="7_4erpx"]
+[ext_resource type="Shader" path="res://addons/pogr_plugin/assets/circle.gdshader" id="7_nt7gx"]
+[ext_resource type="Texture2D" uid="uid://dy2d4pbquxcym" path="res://addons/pogr_plugin/assets/placeholder-avatar.png" id="7_tvqwo"]
 [ext_resource type="Texture2D" uid="uid://baoocmx8a4kv" path="res://addons/pogr_plugin/assets/checkbox_on_dark.png" id="8_0pox8"]
+[ext_resource type="Texture2D" uid="uid://pffcj5j0bv3s" path="res://addons/pogr_plugin/assets/avatar_circle.png" id="9_if234"]
+[ext_resource type="Texture2D" uid="uid://oteh7jlkkkbi" path="res://addons/pogr_plugin/assets/Download.svg" id="9_m36h4"]
+[ext_resource type="Texture2D" uid="uid://b08fh2rlqtcr6" path="res://addons/pogr_plugin/assets/Refresh.svg" id="9_yn8mp"]
+[ext_resource type="FontFile" uid="uid://bayfu5evu6jkf" path="res://addons/pogr_plugin/assets/ubuntu-bold.ttf" id="10_p736c"]
 
 [sub_resource type="GDScript" id="GDScript_1o21u"]
 resource_name = "plugin_settings"
 script/source = "@tool
 extends Window
+
+var preposition: Vector2 = Vector2(0,0)
 
 func _ready():
 	visible = false
@@ -49,6 +59,8 @@ func _on_payloads_pressed(): press_sidebar(1)
 func _on_settings_pressed(): press_sidebar(2)
 
 func _on_credits_pressed(): press_sidebar(3)
+
+
 "
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dt70x"]
@@ -80,7 +92,194 @@ resource_name = "sidebar"
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pfg2i"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2dt4h"]
+[sub_resource type="GDScript" id="GDScript_t81gv"]
+resource_name = "POGR"
+script/source = "@tool
+extends Control
+
+
+var plg_config: ConfigFile = ConfigFile.new()
+
+func _on_sign_out_pressed():
+	plg_config.load(\"res://addons/pogr_plugin/plugin.cfg\")
+	plg_config.set_value(\"plugin\",\"logged_out\",true)
+	plg_config.save(\"res://addons/pogr_plugin/plugin.cfg\")
+	get_node(\"../../Login\")._ready()
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_b4m1y"]
+font_size = 25
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hb0yl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tqxgc"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(0, 0, 0, 0.235294)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqsda"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(0, 0, 0, 0.156863)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqs20"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(0, 0, 0, 0.156863)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_8nbqr"]
+font = ExtResource("6_msd47")
+font_size = 14
+font_color = Color(0.615686, 0.615686, 0.733333, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_nf64d"]
+color = Color(0.392157, 0.392157, 0.501961, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8fbw3"]
+shader = ExtResource("7_nt7gx")
+shader_parameter/amt = 1.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dekvs"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2gubf"]
+font_size = 18
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uhg57"]
+content_margin_left = 5.0
+content_margin_bottom = 8.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_k1e46"]
+size = Vector2(20, 20)
+
+[sub_resource type="GDScript" id="GDScript_b2q5y"]
+resource_name = "Payload"
+script/source = "@tool
+extends Control
+
+
+func _ready():
+	var tree: Tree = $MarginContainer/VBoxContainer/Tree
+	tree.clear()
+	var root = tree.create_item()
+	tree.set_column_title(0,\"DATE RECIEVED\")
+	tree.set_column_title(1,\"CLIENT ID\")
+	tree.set_column_title(2,\"BUILD ID\")
+	tree.set_column_title(3,\"STATUS\")
+	tree.set_column_title(4,\"CALLS\")
+	for ci in tree.get_columns():
+		tree.set_column_title_alignment(ci, HORIZONTAL_ALIGNMENT_LEFT)
+	for i in range(9):
+		var child: TreeItem = tree.create_item(root)
+		child.set_text(0,\"Jun 16, 2:29 PM\")
+		child.set_text(1,\"DBX9...1BD0\")
+		child.set_text(2,\"9978...2170\")
+		child.set_icon(3,load(\"res://addons/pogr_plugin/assets/pending-small.svg\"))
+		child.set_text(4,\"58\")
+		for ci in tree.get_columns():
+			if(i % 2):
+				child.set_custom_bg_color(ci,Color(\"#2F2F3D\"))
+			else:
+				child.set_custom_bg_color(ci,Color(\"#292936\"))
+
+
+func _on_visibility_changed():
+	if(visible):
+		get_node(\"../../\").size = Vector2(800,700)
+	else:
+		get_node(\"../../\").size = Vector2(800,600)
+
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_frl50"]
+line_spacing = 0.0
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_1jpcd"]
+line_spacing = 8.0
+font = ExtResource("6_msd47")
+font_size = 11
+font_color = Color(0.517647, 0.517647, 0.647059, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_528xt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mb2r6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y16rw"]
+content_margin_left = 4.0
+content_margin_top = 13.0
+content_margin_bottom = 13.0
+bg_color = Color(0.0823529, 0.0823529, 0.105882, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x8rid"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_4bh1b"]
+color = Color(0.392157, 0.392157, 0.501961, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gxuuw"]
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_aqgdd"]
+font = ExtResource("6_msd47")
+font_size = 14
+font_color = Color(0.615686, 0.615686, 0.733333, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_guay0"]
+font_size = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7fdxd"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0.866667, 0.866667, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lg2vw"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0.831373, 0.831373, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgxtu"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0, 0.8, 0.8, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
 
 [sub_resource type="GDScript" id="GDScript_r7bbs"]
 resource_name = "Setup"
@@ -415,6 +614,7 @@ var email: String
 var password: String
 
 func _ready():
+	$AnimationPlayer.play(\"RESET\")
 	plg_config.load(\"res://addons/pogr_plugin/plugin.cfg\")
 	visible = plg_config.get_value(\"plugin\",\"logged_out\",true)
 
@@ -562,6 +762,18 @@ tracks/8/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Panel:self_modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_ep5qu"]
 resource_name = "fade_out"
@@ -674,6 +886,18 @@ tracks/8/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Panel:self_modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2m0ov"]
 _data = {
@@ -721,7 +945,7 @@ _data = {
 [node name="plugin_settings" type="Window" groups=["PogrSettingsWindows"]]
 transparent_bg = true
 initial_position = 2
-size = Vector2i(800, 600)
+size = Vector2i(800, 700)
 visible = false
 borderless = true
 transparent = true
@@ -732,15 +956,10 @@ script = SubResource("GDScript_1o21u")
 [node name="PanelContainer" type="PanelContainer" parent="."]
 self_modulate = Color(1, 1, 1, 0)
 clip_children = 2
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -300.0
-offset_right = 400.0
-offset_bottom = 300.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_jhpgo")
@@ -778,7 +997,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_mbwjw")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_c5iso")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_vuowu")
 toggle_mode = true
-button_pressed = true
 button_group = SubResource("ButtonGroup_0ifyn")
 text = "POGR"
 alignment = 0
@@ -794,6 +1012,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_mbwjw")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_c5iso")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_vuowu")
 toggle_mode = true
+button_pressed = true
 button_group = SubResource("ButtonGroup_0ifyn")
 text = "Payloads"
 alignment = 0
@@ -832,98 +1051,377 @@ alignment = 0
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 size_flags_horizontal = 8
-size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxEmpty_pfg2i")
 tabs_visible = false
 
 [node name="POGR" type="Control" parent="PanelContainer/TabContainer"]
 custom_minimum_size = Vector2(600, 600)
 layout_mode = 2
+script = SubResource("GDScript_t81gv")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/POGR"]
-custom_minimum_size = Vector2(100, 100)
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/TabContainer/POGR"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/POGR/MarginContainer"]
+layout_mode = 2
+
+[node name="General" type="Label" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "General"
+label_settings = SubResource("LabelSettings_b4m1y")
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("StyleBoxEmpty_hb0yl")
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/h_separation = 16
+theme_override_constants/arrow_margin = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_tqxgc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yqsda")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqs20")
+item_count = 1
+selected = 0
+popup/item_0/text = "Teamfight Tactics"
+popup/item_0/icon = ExtResource("4_kdul7")
+popup/item_0/id = 0
+
+[node name="Label2" type="Label" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer/OptionButton"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
+offset_left = -187.0
+offset_top = 10.0
+offset_right = -74.0
+offset_bottom = 32.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_2dt4h")
-text = "general window"
+text = "Selected game"
+label_settings = SubResource("LabelSettings_8nbqr")
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 50
+theme_override_styles/separator = SubResource("StyleBoxLine_nf64d")
+
+[node name="YourAccount" type="Label" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Your Account"
+label_settings = SubResource("LabelSettings_b4m1y")
+
+[node name="HSeparator3" type="HSeparator" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("StyleBoxEmpty_hb0yl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Avatar" type="TextureRect" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_8fbw3")
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("7_tvqwo")
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer/HBoxContainer/Avatar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("9_if234")
+
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+theme_override_styles/separator = SubResource("StyleBoxEmpty_dekvs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "DaNinja"
+label_settings = SubResource("LabelSettings_2gubf")
+
+[node name="GameStudio" type="Button" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_disabled_color = Color(0.615686, 0.615686, 0.733333, 1)
+theme_override_constants/h_separation = -8
+theme_override_fonts/font = ExtResource("6_msd47")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_uhg57")
+disabled = true
+text = "GameStudio"
+icon = SubResource("PlaceholderTexture2D_k1e46")
+flat = true
+
+[node name="SignOut" type="Button" parent="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sign out"
 
 [node name="Payloads" type="Control" parent="PanelContainer/TabContainer"]
 visible = false
 custom_minimum_size = Vector2(600, 600)
 layout_mode = 2
+script = SubResource("GDScript_b2q5y")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/Payloads"]
-custom_minimum_size = Vector2(100, 100)
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/TabContainer/Payloads"]
+layout_mode = 0
+offset_right = 141.0
+offset_bottom = 72.0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/Payloads/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Payloads"
+label_settings = SubResource("LabelSettings_frl50")
+
+[node name="Label2" type="Label" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Last update: datehere"
+label_settings = SubResource("LabelSettings_1jpcd")
+
+[node name="Reload" type="Button" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+icon = ExtResource("9_yn8mp")
+icon_alignment = 1
+
+[node name="Tree" type="Tree" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(510, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 12
+theme_override_constants/scrollbar_margin_right = -8
+theme_override_fonts/title_button_font = ExtResource("10_p736c")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/panel = SubResource("StyleBoxEmpty_528xt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mb2r6")
+theme_override_styles/title_button_normal = SubResource("StyleBoxFlat_y16rw")
+theme_override_styles/title_button_pressed = SubResource("StyleBoxFlat_y16rw")
+theme_override_styles/title_button_hover = SubResource("StyleBoxFlat_y16rw")
+columns = 5
+column_titles_visible = true
+hide_folding = true
+hide_root = true
+select_mode = 1
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
+
+[node name="ColorRect" type="ColorRect" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/Tree"]
+z_index = 1
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -408.0
+offset_right = -22.0
+offset_bottom = -400.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_2dt4h")
-text = "here are payloads"
+grow_vertical = 0
+color = Color(0.0823529, 0.0823529, 0.105882, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/Tree"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = 36.0
+offset_right = -22.0
+offset_bottom = 44.0
+grow_horizontal = 2
+color = Color(0.0823529, 0.0823529, 0.105882, 1)
 
 [node name="Settings" type="Control" parent="PanelContainer/TabContainer"]
 visible = false
 custom_minimum_size = Vector2(600, 600)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/Settings"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_2dt4h")
-text = "set the settings"
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/TabContainer/Settings"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/Settings/MarginContainer"]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+label_settings = SubResource("LabelSettings_frl50")
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+theme_override_styles/separator = SubResource("StyleBoxEmpty_x8rid")
+
+[node name="RefreshInterval" type="HSplitContainer" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/RefreshInterval"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Payload refresh interval"
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/RefreshInterval"]
+custom_minimum_size = Vector2(144, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+item_count = 1
+selected = 0
+popup/item_0/text = "Every 10 sec"
+popup/item_0/id = 0
+
+[node name="SortPayloadsBy" type="HSplitContainer" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/SortPayloadsBy"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Sort Payloads by"
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/SortPayloadsBy"]
+custom_minimum_size = Vector2(144, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+item_count = 1
+selected = 0
+popup/item_0/text = "Date received"
+popup/item_0/id = 0
+
+[node name="DebuggingMode" type="HSplitContainer" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/DebuggingMode"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Debugging mode"
+
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/DebuggingMode"]
+layout_mode = 2
+
+[node name="ClearPendingOnExit" type="HSplitContainer" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/ClearPendingOnExit"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Clear pending payloads on exit"
+
+[node name="CheckButton" type="CheckButton" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/ClearPendingOnExit"]
+layout_mode = 2
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 36
+theme_override_styles/separator = SubResource("StyleBoxLine_4bh1b")
+
+[node name="Label2" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "About"
+label_settings = SubResource("LabelSettings_gxuuw")
+
+[node name="Label3" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "You are currently running version v{version}, released {release_date}."
+label_settings = SubResource("LabelSettings_aqgdd")
+
+[node name="CheckBox" type="CheckBox" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Automatically check for new updates"
+
+[node name="CheckForUpdates" type="Button" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 14
+text = "Check for updates"
+
+[node name="Updater" type="VBoxContainer" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/Updater"]
+layout_mode = 2
+text = "A new version is available!"
+label_settings = SubResource("LabelSettings_guay0")
+
+[node name="Button" type="Button" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/Updater"]
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.160784, 0.160784, 0.211765, 1)
+theme_override_colors/font_pressed_color = Color(0.160784, 0.160784, 0.211765, 1)
+theme_override_colors/font_hover_color = Color(0.160784, 0.160784, 0.211765, 1)
+theme_override_colors/font_focus_color = Color(0.160784, 0.160784, 0.211765, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.160784, 0.160784, 0.211765, 1)
+theme_override_constants/h_separation = 8
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_7fdxd")
+theme_override_styles/hover = SubResource("StyleBoxFlat_lg2vw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vgxtu")
+text = "Download"
+icon = ExtResource("9_m36h4")
 
 [node name="Credits" type="Control" parent="PanelContainer/TabContainer"]
 visible = false
 custom_minimum_size = Vector2(600, 600)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/Credits"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_2dt4h")
-text = "credits to me"
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/TabContainer/Credits"]
+layout_mode = 0
+offset_right = 148.0
+offset_bottom = 72.0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/Credits/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Credits/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Credits"
+label_settings = SubResource("LabelSettings_frl50")
 
 [node name="Setup" type="Control" parent="PanelContainer"]
+visible = false
 layout_mode = 2
 script = SubResource("GDScript_r7bbs")
 
@@ -1048,6 +1546,7 @@ libraries = {
 }
 
 [node name="Login" type="Control" parent="PanelContainer"]
+visible = false
 layout_mode = 2
 script = SubResource("GDScript_ovp2j")
 
@@ -1207,6 +1706,9 @@ libraries = {
 [connection signal="pressed" from="PanelContainer/Sidebar/VBoxContainer/Payloads" to="." method="_on_payloads_pressed"]
 [connection signal="pressed" from="PanelContainer/Sidebar/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="PanelContainer/Sidebar/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SignOut" to="PanelContainer/TabContainer/POGR" method="_on_sign_out_pressed"]
+[connection signal="visibility_changed" from="PanelContainer/TabContainer/Payloads" to="PanelContainer/TabContainer/Payloads" method="_on_visibility_changed"]
+[connection signal="pressed" from="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/Reload" to="PanelContainer/TabContainer/Payloads" method="_ready"]
 [connection signal="text_changed" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/BuildID" to="PanelContainer/Setup" method="_on_build_id_text_changed"]
 [connection signal="text_submitted" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/BuildID" to="PanelContainer/Setup" method="_on_text_submitted"]
 [connection signal="text_changed" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/ClientID" to="PanelContainer/Setup" method="_on_client_id_text_changed"]
