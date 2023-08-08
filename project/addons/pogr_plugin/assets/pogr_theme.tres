@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=27 format=3 uid="uid://celf8ca87gih"]
+[gd_resource type="Theme" load_steps=29 format=3 uid="uid://celf8ca87gih"]
 
 [ext_resource type="Texture2D" uid="uid://0e8wiwt5hnwn" path="res://addons/pogr_plugin/assets/toggle_off.svg" id="1_3irgt"]
 [ext_resource type="Texture2D" uid="uid://b6tdsvj00iqhv" path="res://addons/pogr_plugin/assets/toggle_on.svg" id="1_fhhex"]
@@ -9,10 +9,10 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ddroj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gc6k1"]
-content_margin_left = 6.0
-content_margin_top = 12.0
-content_margin_right = 6.0
-content_margin_bottom = 12.0
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
 bg_color = Color(1, 1, 1, 0.0509804)
 corner_radius_top_left = 24
 corner_radius_top_right = 24
@@ -111,7 +111,30 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60acq"]
+bg_color = Color(0.517647, 0.517647, 0.647059, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlnxc"]
+bg_color = Color(0.203922, 0.203922, 0.266667, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.203922, 0.203922, 0.266667, 0)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
 [resource]
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/constants/h_separation = 8
+Button/font_sizes/font_size = 14
 Button/fonts/font = ExtResource("1_ydpv4")
 Button/styles/focus = SubResource("StyleBoxEmpty_ddroj")
 Button/styles/hover = SubResource("StyleBoxFlat_gc6k1")
@@ -147,5 +170,11 @@ LinkButton/fonts/font = ExtResource("1_ydpv4")
 OptionButton/styles/hover = SubResource("StyleBoxFlat_ukn1s")
 OptionButton/styles/normal = SubResource("StyleBoxFlat_qi1hv")
 OptionButton/styles/pressed = SubResource("StyleBoxFlat_y3c7y")
+RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 RichTextLabel/fonts/normal_font = ExtResource("1_ydpv4")
 TextEdit/fonts/font = ExtResource("1_ydpv4")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_60acq")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_60acq")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_60acq")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_qlnxc")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_qlnxc")

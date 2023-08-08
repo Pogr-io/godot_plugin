@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://uero3ivj1fki"
-path="res://.godot/imported/pending-small.svg-2e23cea3dd2320525f24a7c8741dac69.ctex"
+uid="uid://5m51wu4aa7as"
+path="res://.godot/imported/Delete.svg-65e4e836e8c53058197ce12d0b5fee2e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/pogr_plugin/assets/pending-small.svg"
-dest_files=["res://.godot/imported/pending-small.svg-2e23cea3dd2320525f24a7c8741dac69.ctex"]
+source_file="res://addons/pogr_plugin/assets/Delete.svg"
+dest_files=["res://.godot/imported/Delete.svg-65e4e836e8c53058197ce12d0b5fee2e.ctex"]
 
 [params]
 

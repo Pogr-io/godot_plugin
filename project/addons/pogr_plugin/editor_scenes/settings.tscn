@@ -1,6 +1,7 @@
-[gd_scene load_steps=77 format=3 uid="uid://bjxwt6nngje1e"]
+[gd_scene load_steps=100 format=3 uid="uid://bjxwt6nngje1e"]
 
 [ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="1_jhpgo"]
+[ext_resource type="FontFile" uid="uid://csmneg40wqun8" path="res://addons/pogr_plugin/assets/ubuntu.ttf" id="2_k8ixf"]
 [ext_resource type="Texture2D" uid="uid://dron6i1v1wh1v" path="res://addons/pogr_plugin/assets/ThemeDark-1-Smaller.png" id="2_sx7fk"]
 [ext_resource type="Texture2D" uid="uid://byf0bqt0qj5nd" path="res://addons/pogr_plugin/assets/Menu-item.png" id="3_qbhl8"]
 [ext_resource type="Texture2D" uid="uid://bbat633styiy1" path="res://addons/pogr_plugin/assets/Close.svg" id="4_258m7"]
@@ -16,7 +17,12 @@
 [ext_resource type="Texture2D" uid="uid://pffcj5j0bv3s" path="res://addons/pogr_plugin/assets/avatar_circle.png" id="9_if234"]
 [ext_resource type="Texture2D" uid="uid://oteh7jlkkkbi" path="res://addons/pogr_plugin/assets/Download.svg" id="9_m36h4"]
 [ext_resource type="Texture2D" uid="uid://b08fh2rlqtcr6" path="res://addons/pogr_plugin/assets/Refresh.svg" id="9_yn8mp"]
+[ext_resource type="Texture2D" uid="uid://onaj4yvf1624" path="res://addons/pogr_plugin/assets/circle.svg" id="10_e8ru0"]
 [ext_resource type="FontFile" uid="uid://bayfu5evu6jkf" path="res://addons/pogr_plugin/assets/ubuntu-bold.ttf" id="10_p736c"]
+[ext_resource type="Texture2D" uid="uid://5m51wu4aa7as" path="res://addons/pogr_plugin/assets/Delete.svg" id="11_8ot5y"]
+[ext_resource type="Texture2D" uid="uid://cky4befvty7pd" path="res://addons/pogr_plugin/assets/Arrow left back.svg" id="13_assge"]
+[ext_resource type="Texture2D" uid="uid://c0abl0433rpc3" path="res://addons/pogr_plugin/assets/Cross.svg" id="14_4y1k3"]
+[ext_resource type="Texture2D" uid="uid://pguf17n65ofi" path="res://addons/pogr_plugin/assets/Check.svg" id="15_nfjk5"]
 
 [sub_resource type="GDScript" id="GDScript_1o21u"]
 resource_name = "plugin_settings"
@@ -174,38 +180,49 @@ resource_name = "Payload"
 script/source = "@tool
 extends Control
 
+@onready var tree: Tree = $MarginContainer/VBoxContainer/Tree
 
 func _ready():
-	var tree: Tree = $MarginContainer/VBoxContainer/Tree
+	$Popout.hide()
 	tree.clear()
 	var root = tree.create_item()
-	tree.set_column_title(0,\"DATE RECIEVED\")
+	tree.set_column_title(0,\"⠀\"  + \"DATE RECIEVED\")
 	tree.set_column_title(1,\"CLIENT ID\")
 	tree.set_column_title(2,\"BUILD ID\")
 	tree.set_column_title(3,\"STATUS\")
 	tree.set_column_title(4,\"CALLS\")
 	for ci in tree.get_columns():
 		tree.set_column_title_alignment(ci, HORIZONTAL_ALIGNMENT_LEFT)
-	for i in range(9):
+	for i in range(11):
 		var child: TreeItem = tree.create_item(root)
-		child.set_text(0,\"Jun 16, 2:29 PM\")
+		child.set_text(0,\"⠀\" + \"Jun 16, 2:29 PM\")
 		child.set_text(1,\"DBX9...1BD0\")
 		child.set_text(2,\"9978...2170\")
-		child.set_icon(3,load(\"res://addons/pogr_plugin/assets/pending-small.svg\"))
+		child.set_icon(3,load(\"res://addons/pogr_plugin/dynamic_assets/pending-small.svg\"))
 		child.set_text(4,\"58\")
 		for ci in tree.get_columns():
 			if(i % 2):
-				child.set_custom_bg_color(ci,Color(\"#2F2F3D\"))
+				child.set_custom_bg_color(ci,Color(\"#2F2F3D7F\"))
 			else:
-				child.set_custom_bg_color(ci,Color(\"#292936\"))
+				child.set_custom_bg_color(ci,Color(\"#2929367F\"))
 
+func _on_clear_list_pressed():
+	tree.clear()
 
 func _on_visibility_changed():
+	$Popout.hide()
 	if(visible):
 		get_node(\"../../\").size = Vector2(800,700)
 	else:
 		get_node(\"../../\").size = Vector2(800,600)
 
+func _on_tree_item_selected():
+	print(tree.get_selected().get_text(0))
+	$Popout.show()
+
+func _on_cancel_pressed():
+	tree.get_selected().deselect(0)
+	$Popout.hide()
 "
 
 [sub_resource type="LabelSettings" id="LabelSettings_frl50"]
@@ -218,15 +235,116 @@ font = ExtResource("6_msd47")
 font_size = 11
 font_color = Color(0.517647, 0.517647, 0.647059, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dg32e"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_pnqq0"]
+resource_name = "Status"
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_528xt"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mb2r6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y16rw"]
-content_margin_left = 4.0
 content_margin_top = 13.0
 content_margin_bottom = 13.0
 bg_color = Color(0.0823529, 0.0823529, 0.105882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nmeq5"]
+bg_color = Color(0, 0, 0, 0.376471)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_otkvs"]
+bg_color = Color(0.243137, 0.243137, 0.313726, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_wprpk"]
+line_spacing = 8.0
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_njfk6"]
+font_size = 11
+
+[sub_resource type="LabelSettings" id="LabelSettings_lso2m"]
+font = ExtResource("6_msd47")
+font_size = 11
+font_color = Color(0.717647, 0.717647, 0.831373, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a0nle"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.184314, 0.184314, 0.239216, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_h7tka"]
+line_spacing = 6.0
+font = ExtResource("6_msd47")
+font_size = 14
+font_color = Color(0.615686, 0.615686, 0.733333, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3yybv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_45jdc"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_v5lqb"]
+resource_name = "Data"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bm13x"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.290196, 0.290196, 0.372549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wckxl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7shi"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.0509804)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wtdoq"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.0509804)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0bxjp"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 0.0784314)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -944,13 +1062,14 @@ _data = {
 
 [node name="plugin_settings" type="Window" groups=["PogrSettingsWindows"]]
 transparent_bg = true
+title = "POGR"
 initial_position = 2
 size = Vector2i(800, 700)
-visible = false
 borderless = true
 transparent = true
 extend_to_title = true
 theme = ExtResource("1_jhpgo")
+theme_override_fonts/title_font = ExtResource("2_k8ixf")
 script = SubResource("GDScript_1o21u")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -997,6 +1116,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_mbwjw")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_c5iso")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_vuowu")
 toggle_mode = true
+button_pressed = true
 button_group = SubResource("ButtonGroup_0ifyn")
 text = "POGR"
 alignment = 0
@@ -1012,7 +1132,6 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_mbwjw")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_c5iso")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_vuowu")
 toggle_mode = true
-button_pressed = true
 button_group = SubResource("ButtonGroup_0ifyn")
 text = "Payloads"
 alignment = 0
@@ -1176,7 +1295,7 @@ text = "Sign out"
 
 [node name="Payloads" type="Control" parent="PanelContainer/TabContainer"]
 visible = false
-custom_minimum_size = Vector2(600, 600)
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 script = SubResource("GDScript_b2q5y")
 
@@ -1187,11 +1306,10 @@ offset_bottom = 72.0
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
-theme_override_constants/margin_bottom = 40
+theme_override_constants/margin_bottom = 200
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/Payloads/MarginContainer"]
 layout_mode = 2
-size_flags_vertical = 0
 theme_override_constants/separation = 16
 
 [node name="Label" type="Label" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer"]
@@ -1204,21 +1322,84 @@ layout_mode = 2
 text = "Last update: datehere"
 label_settings = SubResource("LabelSettings_1jpcd")
 
-[node name="Reload" type="Button" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Pending" type="Button" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_colors/font_pressed_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/icon_normal_color = Color(1, 0.611765, 0.254902, 1)
+theme_override_colors/icon_pressed_color = Color(1, 0.611765, 0.254902, 1)
+theme_override_colors/icon_hover_color = Color(1, 0.611765, 0.254902, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 0.611765, 0.254902, 1)
+theme_override_colors/icon_focus_color = Color(1, 0.611765, 0.254902, 1)
+theme_override_colors/icon_disabled_color = Color(1, 0.611765, 0.254902, 1)
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dg32e")
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_pnqq0")
+text = "Pending"
+icon = ExtResource("10_e8ru0")
+
+[node name="Saved" type="Button" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/icon_normal_color = Color(0.305882, 0.807843, 0.356863, 1)
+theme_override_colors/icon_pressed_color = Color(0.305882, 0.807843, 0.356863, 1)
+theme_override_colors/icon_hover_color = Color(0.305882, 0.807843, 0.356863, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.305882, 0.807843, 0.356863, 1)
+theme_override_colors/icon_focus_color = Color(0.305882, 0.807843, 0.356863, 1)
+theme_override_colors/icon_disabled_color = Color(0.305882, 0.807843, 0.356863, 1)
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dg32e")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_pnqq0")
+text = "Saved"
+icon = ExtResource("10_e8ru0")
+
+[node name="Ignored" type="Button" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_colors/icon_normal_color = Color(0.992157, 0.266667, 0.4, 1)
+theme_override_colors/icon_pressed_color = Color(0.992157, 0.266667, 0.4, 1)
+theme_override_colors/icon_hover_color = Color(0.992157, 0.266667, 0.4, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.992157, 0.266667, 0.4, 1)
+theme_override_colors/icon_focus_color = Color(0.992157, 0.266667, 0.4, 1)
+theme_override_colors/icon_disabled_color = Color(0.992157, 0.266667, 0.4, 1)
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dg32e")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_pnqq0")
+text = "Ignored"
+icon = ExtResource("10_e8ru0")
+
+[node name="Reload" type="Button" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 8
 icon = ExtResource("9_yn8mp")
 icon_alignment = 1
 
-[node name="Tree" type="Tree" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(510, 0)
+[node name="ClearList" type="Button" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Clear list"
+icon = ExtResource("11_8ot5y")
+
+[node name="Tree" type="Tree" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer"]
+use_parent_material = true
+custom_minimum_size = Vector2(500, 450)
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("1_jhpgo")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
-theme_override_constants/h_separation = 8
+theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 12
-theme_override_constants/scrollbar_margin_right = -8
+theme_override_constants/scrollbar_h_separation = -8
 theme_override_fonts/title_button_font = ExtResource("10_p736c")
 theme_override_font_sizes/font_size = 14
 theme_override_styles/panel = SubResource("StyleBoxEmpty_528xt")
@@ -1232,34 +1413,234 @@ hide_folding = true
 hide_root = true
 select_mode = 1
 scroll_horizontal_enabled = false
-scroll_vertical_enabled = false
 
-[node name="ColorRect" type="ColorRect" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/Tree"]
-z_index = 1
+[node name="Popout" type="PanelContainer" parent="PanelContainer/TabContainer/Payloads"]
+visible = false
+custom_minimum_size = Vector2(800, 700)
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -350.0
+offset_right = 300.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nmeq5")
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/TabContainer/Payloads/Popout"]
+layout_mode = 2
+theme_override_constants/margin_left = -70
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 124
+theme_override_constants/margin_bottom = 48
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2"]
+custom_minimum_size = Vector2(528, 580)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_otkvs")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Payload Information"
+label_settings = SubResource("LabelSettings_wprpk")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Build:"
+label_settings = SubResource("LabelSettings_njfk6")
+
+[node name="Label2" type="Label" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+label_settings = SubResource("LabelSettings_lso2m")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Client:"
+label_settings = SubResource("LabelSettings_njfk6")
+
+[node name="Label2" type="Label" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 10
+label_settings = SubResource("LabelSettings_lso2m")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(240, 58)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a0nle")
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Date first recieved"
+label_settings = SubResource("LabelSettings_h7tka")
+
+[node name="Label2" type="Label" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(116, 58)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a0nle")
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/PanelContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Status"
+label_settings = SubResource("LabelSettings_h7tka")
+
+[node name="Label2" type="RichTextLabel" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/PanelContainer2"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/normal_font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxEmpty_3yybv")
+bbcode_enabled = true
+text = "[center][img]res://addons/pogr_plugin/assets/circle.svg[/img]  Pending"
+scroll_active = false
+scroll_following = true
+
+[node name="PanelContainer3" type="PanelContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(116, 58)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a0nle")
+
+[node name="Label" type="Label" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/PanelContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Calls"
+label_settings = SubResource("LabelSettings_h7tka")
+
+[node name="Label2" type="Label" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/PanelContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+theme_override_styles/separator = SubResource("StyleBoxEmpty_45jdc")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Definition" type="Button" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dg32e")
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_v5lqb")
+text = "Definition"
+
+[node name="DataRecieved" type="Button" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+theme_override_colors/font_pressed_color = Color(0.101961, 0.101961, 0.133333, 1)
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dg32e")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_v5lqb")
+text = "Data Recieved"
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+theme_override_styles/separator = SubResource("StyleBoxEmpty_45jdc")
+
+[node name="Panel" type="Panel" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(472, 234)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bm13x")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = -408.0
-offset_right = -22.0
-offset_bottom = -400.0
 grow_horizontal = 2
-grow_vertical = 0
-color = Color(0.0823529, 0.0823529, 0.105882, 1)
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="ColorRect2" type="ColorRect" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/Tree"]
-z_index = 1
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 8.0
-offset_top = 36.0
-offset_right = -22.0
-offset_bottom = 44.0
-grow_horizontal = 2
-color = Color(0.0823529, 0.0823529, 0.105882, 1)
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/Panel/MarginContainer"]
+custom_minimum_size = Vector2(434, 0)
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("6_msd47")
+theme_override_font_sizes/normal_font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxEmpty_wckxl")
+text = "{   \"$id\": \"https://example.com/arrays.schema.json\",   \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",   \"description\": \"A representation of a person, company, organization, or place\",   \"type\": \"object\",   \"properties\": {     \"fruits\": {       \"type\": \"array\",       \"items\": {         \"type\": \"string\"       }     },     \"vegetables\": {       \"type\": \"array\",       \"items\": { \"$ref\": \"#/$defs/veggie\" }     }   },   \"$defs\": {     \"veggie\": {       \"type\": \"object\",       \"required\": [ \"veggieName\", \"veggieLike\" ],       \"properties\": {         \"veggieName\": {           \"type\": \"string\",           \"description\": \"The name of the vegetable.\"         },         \"veggieLike\": {           \"type\": \"boolean\",           \"description\": \"Do I like this vegetable?\"         }       }     }   } }"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Cancel" type="Button" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_l7shi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wtdoq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0bxjp")
+text = "Cancel"
+icon = ExtResource("13_assge")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Ignore" type="Button" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_l7shi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wtdoq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0bxjp")
+text = "Ignore"
+icon = ExtResource("14_4y1k3")
+
+[node name="Save" type="Button" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_l7shi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wtdoq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0bxjp")
+text = "Save
+"
+icon = ExtResource("15_nfjk5")
 
 [node name="Settings" type="Control" parent="PanelContainer/TabContainer"]
 visible = false
@@ -1708,7 +2089,11 @@ libraries = {
 [connection signal="pressed" from="PanelContainer/Sidebar/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="PanelContainer/TabContainer/POGR/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SignOut" to="PanelContainer/TabContainer/POGR" method="_on_sign_out_pressed"]
 [connection signal="visibility_changed" from="PanelContainer/TabContainer/Payloads" to="PanelContainer/TabContainer/Payloads" method="_on_visibility_changed"]
-[connection signal="pressed" from="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/Reload" to="PanelContainer/TabContainer/Payloads" method="_ready"]
+[connection signal="pressed" from="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/HBoxContainer/Reload" to="PanelContainer/TabContainer/Payloads" method="_ready"]
+[connection signal="pressed" from="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/HBoxContainer/ClearList" to="PanelContainer/TabContainer/Payloads" method="_on_clear_list_pressed"]
+[connection signal="item_selected" from="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/Tree" to="PanelContainer/TabContainer/Payloads" method="_on_tree_item_selected"]
+[connection signal="multi_selected" from="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/Tree" to="PanelContainer/TabContainer/Payloads" method="_on_tree_multi_selected"]
+[connection signal="pressed" from="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/Cancel" to="PanelContainer/TabContainer/Payloads" method="_on_cancel_pressed"]
 [connection signal="text_changed" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/BuildID" to="PanelContainer/Setup" method="_on_build_id_text_changed"]
 [connection signal="text_submitted" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/BuildID" to="PanelContainer/Setup" method="_on_text_submitted"]
 [connection signal="text_changed" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/ClientID" to="PanelContainer/Setup" method="_on_client_id_text_changed"]
