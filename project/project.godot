@@ -27,7 +27,7 @@ project/assembly_name="Pogr SDK Plugin"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/pogr_plugin/plugin.cfg", "res://addons/zylann.editor_debugger/plugin.cfg")
+enabled=PackedStringArray("res://addons/pogr_plugin/plugin.cfg")
 
 [filesystem]
 

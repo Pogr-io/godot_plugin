@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=29 format=3 uid="uid://celf8ca87gih"]
+[gd_resource type="Theme" load_steps=34 format=3 uid="uid://celf8ca87gih"]
 
 [ext_resource type="Texture2D" uid="uid://0e8wiwt5hnwn" path="res://addons/pogr_plugin/assets/toggle_off.svg" id="1_3irgt"]
 [ext_resource type="Texture2D" uid="uid://b6tdsvj00iqhv" path="res://addons/pogr_plugin/assets/toggle_on.svg" id="1_fhhex"]
@@ -111,7 +111,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60acq"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yeg2y"]
 bg_color = Color(0.517647, 0.517647, 0.647059, 1)
 border_width_left = 2
 border_width_right = 2
@@ -121,8 +121,58 @@ corner_radius_top_right = 9
 corner_radius_bottom_right = 9
 corner_radius_bottom_left = 9
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlnxc"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7upqm"]
+bg_color = Color(0.517647, 0.517647, 0.647059, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e7ya2"]
+bg_color = Color(0.517647, 0.517647, 0.647059, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cr3gk"]
 bg_color = Color(0.203922, 0.203922, 0.266667, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gn3yv"]
+bg_color = Color(0.203922, 0.203922, 0.266667, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_60acq"]
+bg_color = Color(0.392157, 0.392157, 0.501961, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(1, 1, 1, 0)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlnxc"]
+bg_color = Color(0.160784, 0.160784, 0.211765, 1)
 border_width_left = 2
 border_width_right = 2
 border_color = Color(0.203922, 0.203922, 0.266667, 0)
@@ -173,6 +223,12 @@ OptionButton/styles/pressed = SubResource("StyleBoxFlat_y3c7y")
 RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 RichTextLabel/fonts/normal_font = ExtResource("1_ydpv4")
 TextEdit/fonts/font = ExtResource("1_ydpv4")
+TextLabelBox/base_type = &"VScrollBar"
+TextLabelBox/styles/grabber = SubResource("StyleBoxFlat_yeg2y")
+TextLabelBox/styles/grabber_highlight = SubResource("StyleBoxFlat_7upqm")
+TextLabelBox/styles/grabber_pressed = SubResource("StyleBoxFlat_e7ya2")
+TextLabelBox/styles/scroll = SubResource("StyleBoxFlat_cr3gk")
+TextLabelBox/styles/scroll_focus = SubResource("StyleBoxFlat_gn3yv")
 VScrollBar/styles/grabber = SubResource("StyleBoxFlat_60acq")
 VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_60acq")
 VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_60acq")

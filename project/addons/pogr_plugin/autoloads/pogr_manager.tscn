@@ -1,13 +1,141 @@
 [gd_scene load_steps=2 format=3 uid="uid://co21y63e176p6"]
 
-[ext_resource type="Script" path="res://addons/pogr_plugin/editor_scripts/pogr_manager.gd" id="1_bsqx8"]
+[sub_resource type="GDScript" id="GDScript_tmu0w"]
+script/source = "extends HTTPRequest
+
+var close_request: bool = false
+var monitor_dict: Dictionary = {}
+var thread: Thread = Thread.new()
+var close_thread: Thread = Thread.new()
+
+var config: ConfigFile = ConfigFile.new()
+
+func _ready() -> void:
+	config.load(\"res://addons/pogr_plugin/save/config.pogr\")
+	if((config.has_section_key(\"api\",\"client_id\") && config.has_section_key(\"api\",\"build_id\"))):
+		thread.start(toggle_session)
+		thread.wait_to_finish()
+		thread.start(monitor_update)
+	else:
+		push_warning(\"The POGR plugin is enabled but is not properly setup! (client_id && build_id)\")
+
+func _notification(what) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		get_tree().set_auto_accept_quit(false)
+		close_thread.start(toggle_session)
+		close_thread.wait_to_finish()
+		thread.wait_to_finish()
+		close_request = true
+
+func toggle_session() -> void:
+	request(\"http://postman-echo.com/get\", [\"CLIENT_ID: \" + config.get_value(\"api\",\"client_id\",\"\"), \"BUILD_ID: \" + config.get_value(\"api\",\"build_id\",\"\")], HTTPClient.METHOD_GET)
+
+func _on_request_completed(_result, _response_code, _headers, body) -> void:
+	if(body):
+		var json: Dictionary = JSON.parse_string(body.get_string_from_utf8())
+		if(json[\"headers\"]):
+			print(json[\"headers\"])
+		if(close_request):
+			get_tree().quit()
+
+func _on_monitor_timer_timeout() -> void:
+	thread.wait_to_finish()
+	thread.start(monitor_update)
+
+func exec_sys_info() -> Dictionary:
+	var output: Dictionary = {
+			\"cpu_percent\": \"unknown\",
+			\"gpu_status\": \"unknown\"
+		}
+	if (OS.get_name() == \"Windows\"):
+		var cpupercentoutput = []
+		OS.execute(\"wmic\",[\"cpu\", \"get\", \"loadpercentage\", \"/format:csv\"],cpupercentoutput,true)
+		output.cpu_percent = cpupercentoutput[0].split(\",\")[2].strip_escapes()
+		var gpustatusoutput = []
+		OS.execute(\"wmic\",[\"path\", \"win32_VideoController\", \"get\", \"status\"],gpustatusoutput,true)
+		output.gpu_status = gpustatusoutput[0].strip_escapes().strip_edges().split(\"      \")
+		var reversed_gpu_statuses: Array # Last GPU is main used GPU
+		reversed_gpu_statuses = output.gpu_status
+		reversed_gpu_statuses.reverse()
+		output.gpu_status = reversed_gpu_statuses[0]
+	output.make_read_only()
+	return output
+
+func monitor_update() -> void:
+	var sys_monitor_info = pogr_plugin.get_sys_monitor_info()
+
+	monitor_dict = {
+		\"engine\": \"Godot Engine \" + Engine.get_version_info().string,
+		\"loaded_objects\":{
+			\"all\": Performance.get_monitor(Performance.OBJECT_COUNT), 
+			\"nodes\": Performance.get_monitor(Performance.OBJECT_NODE_COUNT),
+			\"orphan_nodes\": Performance.get_monitor(Performance.OBJECT_ORPHAN_NODE_COUNT),
+			\"resource\": Performance.get_monitor(Performance.OBJECT_RESOURCE_COUNT),
+			\"physics_active\": {
+					\"2d\": Performance.get_monitor(Performance.PHYSICS_2D_ACTIVE_OBJECTS),
+					\"3d\": Performance.get_monitor(Performance.PHYSICS_3D_ACTIVE_OBJECTS)
+				}
+		},
+		\"os\": {
+			\"name\": OS.get_name(),
+			\"distro\": OS.get_distribution_name(),
+			\"version\": OS.get_version(),
+			\"language\": OS.get_locale(),
+			\"time\": \"{year}-{month}-{day} {hour}:{minute}:{second}\".format(Time.get_datetime_dict_from_system(true))
+		},
+		\"device\": OS.get_model_name(),
+		\"unique_id\": OS.get_unique_id(),
+		\"cpu\": {
+			\"name\": OS.get_processor_name(),
+			\"count\": OS.get_processor_count(),
+			\"percentage\": exec_sys_info().cpu_percent,
+			\"process_time\":{
+				\"physics\" : Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS),
+				\"navigation\": Performance.get_monitor(Performance.TIME_NAVIGATION_PROCESS)
+			},
+		},
+		\"gpu\": {
+			\"name\": RenderingServer.get_video_adapter_name(),
+			\"vendor\": RenderingServer.get_video_adapter_vendor(),
+			\"driver_info\": OS.get_video_adapter_driver_info(),
+			\"api_version\": RenderingServer.get_video_adapter_api_version(),
+			\"frame_process_time\": Performance.get_monitor(Performance.TIME_PROCESS),
+			\"rendered_objects_last_frame\": Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME),
+			\"video_memory_used\": Performance.get_monitor(Performance.RENDER_VIDEO_MEM_USED),
+			\"status\": exec_sys_info().gpu_status,
+			\"fps\": Performance.get_monitor(Performance.TIME_FPS)
+		},
+		\"memory\": {
+			\"max_physical\": sys_monitor_info.max_phys_memory,
+			\"max_virtual\": sys_monitor_info.max_virt_memory,
+			\"max_pagefile\": sys_monitor_info.max_page_memory,
+			\"free_physical\": sys_monitor_info.free_phys_memory,
+			\"free_virtual\": sys_monitor_info.free_virt_memory,
+			\"free_pagefile\": sys_monitor_info.free_page_memory,
+		},
+	}
+	if(OS.has_feature(\"editor\")):
+		monitor_dict.merge({\"build_type\": \"editor\"})
+	elif(OS.has_feature(\"debug\")):
+		monitor_dict.merge({\"build_type\": \"debug\"})
+	elif(OS.has_feature(\"release\")):
+		monitor_dict.merge({\"build_type\": \"release\"})
+	var payloadsave: ConfigFile = ConfigFile.new()
+	payloadsave.load(\"user://payloads.pgrp\")
+	if(payloadsave.has_section_key(\"monitor\",\"0\")):
+		payloadsave.set_value(\"monitor\",str(payloadsave.get_section_keys(\"monitor\").size()),monitor_dict)
+	else:
+		payloadsave.set_value(\"monitor\",\"0\",monitor_dict)
+	payloadsave.save(\"user://payloads.pgrp\")
+	print(monitor_dict)
+"
 
 [node name="POGR_Manager" type="HTTPRequest"]
 process_thread_group = 2
 process_thread_group_order = 1
 process_thread_messages = 0
 use_threads = true
-script = ExtResource("1_bsqx8")
+script = SubResource("GDScript_tmu0w")
 
 [node name="MonitorTimer" type="Timer" parent="."]
 process_thread_group = 2

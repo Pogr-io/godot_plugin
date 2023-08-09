@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=3 uid="uid://bjxwt6nngje1e"]
+[gd_scene load_steps=103 format=3 uid="uid://bjxwt6nngje1e"]
 
 [ext_resource type="Theme" uid="uid://celf8ca87gih" path="res://addons/pogr_plugin/assets/pogr_theme.tres" id="1_jhpgo"]
 [ext_resource type="FontFile" uid="uid://csmneg40wqun8" path="res://addons/pogr_plugin/assets/ubuntu.ttf" id="2_k8ixf"]
@@ -11,7 +11,6 @@
 [ext_resource type="FontFile" uid="uid://bla3553u4v7i4" path="res://addons/pogr_plugin/assets/ubuntu-light.ttf" id="6_msd47"]
 [ext_resource type="Texture2D" uid="uid://foaeaffoier2" path="res://addons/pogr_plugin/assets/ThemeDark-1-Small.png" id="6_vyuji"]
 [ext_resource type="Texture2D" uid="uid://cnjivbngpmbjl" path="res://addons/pogr_plugin/assets/Text field.png" id="7_4erpx"]
-[ext_resource type="Shader" path="res://addons/pogr_plugin/assets/circle.gdshader" id="7_nt7gx"]
 [ext_resource type="Texture2D" uid="uid://dy2d4pbquxcym" path="res://addons/pogr_plugin/assets/placeholder-avatar.png" id="7_tvqwo"]
 [ext_resource type="Texture2D" uid="uid://baoocmx8a4kv" path="res://addons/pogr_plugin/assets/checkbox_on_dark.png" id="8_0pox8"]
 [ext_resource type="Texture2D" uid="uid://pffcj5j0bv3s" path="res://addons/pogr_plugin/assets/avatar_circle.png" id="9_if234"]
@@ -32,7 +31,7 @@ extends Window
 var preposition: Vector2 = Vector2(0,0)
 
 func _ready():
-	visible = false
+	$AnimationPlayer.speed_scale = 1
 	$AnimationPlayer.clear_caches()
 	$AnimationPlayer.play(\"fade_in\")
 
@@ -65,8 +64,6 @@ func _on_payloads_pressed(): press_sidebar(1)
 func _on_settings_pressed(): press_sidebar(2)
 
 func _on_credits_pressed(): press_sidebar(3)
-
-
 "
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dt70x"]
@@ -159,8 +156,25 @@ font_color = Color(0.615686, 0.615686, 0.733333, 1)
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_nf64d"]
 color = Color(0.392157, 0.392157, 0.501961, 1)
 
+[sub_resource type="Shader" id="Shader_3bj7q"]
+code = "shader_type canvas_item;
+
+uniform float amt:hint_range(0.0, 1.0);
+
+void fragment() 
+{
+	if (distance(UV, vec2(0.5,0.5)) > amt/2.0) 
+	{
+		COLOR = vec4(0.0);
+	}
+	else 
+	{
+		COLOR = texture(TEXTURE,UV);
+	}
+}"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8fbw3"]
-shader = ExtResource("7_nt7gx")
+shader = SubResource("Shader_3bj7q")
 shader_parameter/amt = 1.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dekvs"]
@@ -211,7 +225,7 @@ func _on_clear_list_pressed():
 
 func _on_visibility_changed():
 	$Popout.hide()
-	if(visible):
+	if(visible && !(get_node(\"../../\").get_child(2).visible || get_node(\"../../\").get_child(3).visible)):
 		get_node(\"../../\").size = Vector2(800,700)
 	else:
 		get_node(\"../../\").size = Vector2(800,600)
@@ -296,6 +310,33 @@ line_spacing = 6.0
 font = ExtResource("6_msd47")
 font_size = 14
 font_color = Color(0.615686, 0.615686, 0.733333, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ysjj1"]
+bg_color = Color(0.392157, 0.392157, 0.501961, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0x6ie"]
+bg_color = Color(0.160784, 0.160784, 0.211765, 1)
+border_width_left = 2
+border_width_right = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="Theme" id="Theme_n3wxv"]
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_ysjj1")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_ysjj1")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_ysjj1")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_0x6ie")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxFlat_0x6ie")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3yybv"]
 
@@ -602,6 +643,18 @@ tracks/8/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("PanelContainer:self_modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_vdliv"]
 resource_name = "fade_out"
@@ -709,6 +762,18 @@ tracks/8/path = NodePath("PanelContainer/MarginContainer/HBoxContainer/ImportBut
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("PanelContainer:self_modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
 "times": PackedFloat32Array(0, 0.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
@@ -1065,6 +1130,7 @@ transparent_bg = true
 title = "POGR"
 initial_position = 2
 size = Vector2i(800, 700)
+visible = false
 borderless = true
 transparent = true
 extend_to_title = true
@@ -1391,7 +1457,7 @@ icon = ExtResource("11_8ot5y")
 
 [node name="Tree" type="Tree" parent="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer"]
 use_parent_material = true
-custom_minimum_size = Vector2(500, 450)
+custom_minimum_size = Vector2(520, 470)
 layout_mode = 2
 size_flags_vertical = 0
 theme = ExtResource("1_jhpgo")
@@ -1399,7 +1465,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 12
-theme_override_constants/scrollbar_h_separation = -8
+theme_override_constants/scrollbar_h_separation = 20
 theme_override_fonts/title_button_font = ExtResource("10_p736c")
 theme_override_font_sizes/font_size = 14
 theme_override_styles/panel = SubResource("StyleBoxEmpty_528xt")
@@ -1519,10 +1585,11 @@ size_flags_vertical = 0
 text = "Status"
 label_settings = SubResource("LabelSettings_h7tka")
 
-[node name="Label2" type="RichTextLabel" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/PanelContainer2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/PanelContainer2"]
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 size_flags_vertical = 8
+theme = SubResource("Theme_n3wxv")
 theme_override_font_sizes/normal_font_size = 14
 theme_override_styles/normal = SubResource("StyleBoxEmpty_3yybv")
 bbcode_enabled = true
@@ -1597,6 +1664,8 @@ theme_override_constants/margin_bottom = 16
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/Panel/MarginContainer"]
 custom_minimum_size = Vector2(434, 0)
 layout_mode = 2
+theme = ExtResource("1_jhpgo")
+theme_type_variation = &"TextLabelBox"
 theme_override_colors/default_color = Color(1, 1, 1, 1)
 theme_override_fonts/normal_font = ExtResource("6_msd47")
 theme_override_font_sizes/normal_font_size = 12
@@ -1981,7 +2050,7 @@ theme_override_constants/margin_top = 48
 
 [node name="Label" type="Label" parent="PanelContainer/Login/Panel/MarginContainer/VBoxContainer/Title"]
 layout_mode = 2
-text = "First, you to access your account"
+text = "First, you need to access your account"
 label_settings = SubResource("LabelSettings_v67yw")
 
 [node name="EmailLabel" type="MarginContainer" parent="PanelContainer/Login/Panel/MarginContainer/VBoxContainer"]
@@ -2082,6 +2151,7 @@ libraries = {
 "": SubResource("AnimationLibrary_mm1dk")
 }
 
+[connection signal="about_to_popup" from="." to="." method="_ready"]
 [connection signal="close_requested" from="." to="." method="_on_close_pressed"]
 [connection signal="pressed" from="PanelContainer/Sidebar/VBoxContainer/POGR" to="." method="_on_pogr_pressed"]
 [connection signal="pressed" from="PanelContainer/Sidebar/VBoxContainer/Payloads" to="." method="_on_payloads_pressed"]
@@ -2092,14 +2162,15 @@ libraries = {
 [connection signal="pressed" from="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/HBoxContainer/Reload" to="PanelContainer/TabContainer/Payloads" method="_ready"]
 [connection signal="pressed" from="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/HBoxContainer/ClearList" to="PanelContainer/TabContainer/Payloads" method="_on_clear_list_pressed"]
 [connection signal="item_selected" from="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/Tree" to="PanelContainer/TabContainer/Payloads" method="_on_tree_item_selected"]
-[connection signal="multi_selected" from="PanelContainer/TabContainer/Payloads/MarginContainer/VBoxContainer/Tree" to="PanelContainer/TabContainer/Payloads" method="_on_tree_multi_selected"]
 [connection signal="pressed" from="PanelContainer/TabContainer/Payloads/Popout/MarginContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/Cancel" to="PanelContainer/TabContainer/Payloads" method="_on_cancel_pressed"]
+[connection signal="visibility_changed" from="PanelContainer/Setup" to="PanelContainer/TabContainer/Payloads" method="_on_visibility_changed"]
 [connection signal="text_changed" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/BuildID" to="PanelContainer/Setup" method="_on_build_id_text_changed"]
 [connection signal="text_submitted" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/BuildID" to="PanelContainer/Setup" method="_on_text_submitted"]
 [connection signal="text_changed" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/ClientID" to="PanelContainer/Setup" method="_on_client_id_text_changed"]
 [connection signal="text_submitted" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/ClientID" to="PanelContainer/Setup" method="_on_text_submitted"]
 [connection signal="pressed" from="PanelContainer/Setup/PanelContainer/MarginContainer/VBoxContainer/StartButton/Start" to="PanelContainer/Setup" method="_on_start_pressed"]
 [connection signal="pressed" from="PanelContainer/Setup/PanelContainer/MarginContainer/HBoxContainer/ImportButton" to="PanelContainer/Setup" method="_on_import_button_pressed"]
+[connection signal="visibility_changed" from="PanelContainer/Login" to="PanelContainer/TabContainer/Payloads" method="_on_visibility_changed"]
 [connection signal="text_changed" from="PanelContainer/Login/Panel/MarginContainer/VBoxContainer/Email" to="PanelContainer/Login" method="_on_email_text_changed"]
 [connection signal="text_changed" from="PanelContainer/Login/Panel/MarginContainer/VBoxContainer/Password" to="PanelContainer/Login" method="_on_password_text_changed"]
 [connection signal="pressed" from="PanelContainer/Login/Panel/MarginContainer/VBoxContainer/Login" to="PanelContainer/Login" method="_on_login_pressed"]

@@ -10,12 +10,12 @@ func _enable_plugin() -> void:
 		DirAccess.remove_absolute(ProjectSettings.globalize_path("res://") + "addons/pogr_plugin/assets/.gdignore")
 	add_autoload_singleton("POGR_Manager","res://addons/pogr_plugin/autoloads/pogr_manager.tscn")
 	await get_tree().create_timer(0.2).timeout
+	FileAccess.open("res://addons/pogr_plugin/assets/.gdignore",FileAccess.WRITE)
 	pogrwindow = preload("res://addons/pogr_plugin/editor_scenes/restart_window.tscn").instantiate()
 	add_control_to_container(EditorPlugin.CONTAINER_CANVAS_EDITOR_MENU,pogrwindow)
 	pogrwindow.connect("save_restart",save_restart)
 	pogrwindow.connect("non_save_restart",restart)
 	push_warning("POGR: PLEASE RESTART THE EDITOR")
-	#FileAccess.open("res://addons/pogr_plugin/assets/.gdignore",FileAccess.WRITE)
 
 func _enter_tree():
 	if(get_tree().root.has_node("@EditorNode@17638")):
