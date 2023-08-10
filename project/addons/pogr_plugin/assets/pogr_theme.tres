@@ -1,10 +1,12 @@
-[gd_resource type="Theme" load_steps=34 format=3 uid="uid://celf8ca87gih"]
+[gd_resource type="Theme" load_steps=40 format=3 uid="uid://celf8ca87gih"]
 
 [ext_resource type="Texture2D" uid="uid://0e8wiwt5hnwn" path="res://addons/pogr_plugin/assets/toggle_off.svg" id="1_3irgt"]
 [ext_resource type="Texture2D" uid="uid://b6tdsvj00iqhv" path="res://addons/pogr_plugin/assets/toggle_on.svg" id="1_fhhex"]
 [ext_resource type="FontFile" uid="uid://csmneg40wqun8" path="res://addons/pogr_plugin/assets/ubuntu.ttf" id="1_ydpv4"]
 [ext_resource type="Texture2D" uid="uid://co870kuqur382" path="res://addons/pogr_plugin/assets/checkbox_on.png" id="2_whgnx"]
 [ext_resource type="Texture2D" uid="uid://1ue72bu07qq1" path="res://addons/pogr_plugin/assets/checkbox_off.png" id="3_a4kl4"]
+[ext_resource type="Texture2D" uid="uid://tug7fpi522tj" path="res://addons/pogr_plugin/assets/Dropdown arrow.svg" id="6_2wq7d"]
+[ext_resource type="Texture2D" uid="uid://bg3tju4leya8b" path="res://addons/pogr_plugin/assets/CheckDropdown.svg" id="7_j4iyq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ddroj"]
 
@@ -105,11 +107,27 @@ content_margin_left = 12.0
 content_margin_top = 8.0
 content_margin_right = 12.0
 content_margin_bottom = 8.0
-bg_color = Color(1, 1, 1, 0.0784314)
+bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+
+[sub_resource type="ImageTexture" id="ImageTexture_vna88"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_15235"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.243137, 0.243137, 0.313726, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gwphh"]
+bg_color = Color(0.160784, 0.160784, 0.211765, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aycuu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yeg2y"]
 bg_color = Color(0.517647, 0.517647, 0.647059, 1)
@@ -183,6 +201,15 @@ corner_radius_bottom_left = 9
 
 [resource]
 Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_focus_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
 Button/constants/h_separation = 8
 Button/font_sizes/font_size = 14
 Button/fonts/font = ExtResource("1_ydpv4")
@@ -190,6 +217,10 @@ Button/styles/focus = SubResource("StyleBoxEmpty_ddroj")
 Button/styles/hover = SubResource("StyleBoxFlat_gc6k1")
 Button/styles/normal = SubResource("StyleBoxFlat_h1vi6")
 Button/styles/pressed = SubResource("StyleBoxFlat_wrq8p")
+CheckBox/colors/font_focus_color = Color(1, 1, 1, 1)
+CheckBox/colors/font_hover_color = Color(1, 1, 1, 1)
+CheckBox/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+CheckBox/colors/font_pressed_color = Color(1, 1, 1, 1)
 CheckBox/icons/checked = ExtResource("2_whgnx")
 CheckBox/icons/unchecked = ExtResource("3_a4kl4")
 CheckBox/styles/disabled = SubResource("StyleBoxEmpty_wlrup")
@@ -217,9 +248,21 @@ LinkButton/colors/font_hover_color = Color(0, 0.866667, 0.866667, 1)
 LinkButton/colors/font_outline_color = Color(0, 0.866667, 0.866667, 1)
 LinkButton/colors/font_pressed_color = Color(0, 0.866667, 0.866667, 1)
 LinkButton/fonts/font = ExtResource("1_ydpv4")
+OptionButton/colors/font_hover_pressed_color = Color(0.160784, 0.160784, 0.211765, 1)
+OptionButton/colors/font_pressed_color = Color(0.160784, 0.160784, 0.211765, 1)
+OptionButton/constants/arrow_margin = 12
+OptionButton/constants/modulate_arrow = 100
+OptionButton/icons/arrow = ExtResource("6_2wq7d")
 OptionButton/styles/hover = SubResource("StyleBoxFlat_ukn1s")
 OptionButton/styles/normal = SubResource("StyleBoxFlat_qi1hv")
 OptionButton/styles/pressed = SubResource("StyleBoxFlat_y3c7y")
+PopupMenu/constants/h_separation = 8
+PopupMenu/constants/v_separation = 20
+PopupMenu/icons/radio_checked = ExtResource("7_j4iyq")
+PopupMenu/icons/radio_unchecked = SubResource("ImageTexture_vna88")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_15235")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_gwphh")
+PopupMenu/styles/separator = SubResource("StyleBoxEmpty_aycuu")
 RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 RichTextLabel/fonts/normal_font = ExtResource("1_ydpv4")
 TextEdit/fonts/font = ExtResource("1_ydpv4")

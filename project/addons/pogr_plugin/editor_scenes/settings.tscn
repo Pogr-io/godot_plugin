@@ -1130,7 +1130,6 @@ transparent_bg = true
 title = "POGR"
 initial_position = 2
 size = Vector2i(800, 700)
-visible = false
 borderless = true
 transparent = true
 extend_to_title = true
@@ -1240,6 +1239,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_pfg2i")
 tabs_visible = false
 
 [node name="POGR" type="Control" parent="PanelContainer/TabContainer"]
+visible = false
 custom_minimum_size = Vector2(600, 600)
 layout_mode = 2
 script = SubResource("GDScript_t81gv")
@@ -1712,7 +1712,6 @@ text = "Save
 icon = ExtResource("15_nfjk5")
 
 [node name="Settings" type="Control" parent="PanelContainer/TabContainer"]
-visible = false
 custom_minimum_size = Vector2(600, 600)
 layout_mode = 2
 
@@ -1742,6 +1741,7 @@ theme_override_styles/separator = SubResource("StyleBoxEmpty_x8rid")
 
 [node name="RefreshInterval" type="HSplitContainer" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
+dragger_visibility = 2
 
 [node name="Label" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/RefreshInterval"]
 layout_mode = 2
@@ -1759,6 +1759,7 @@ popup/item_0/id = 0
 
 [node name="SortPayloadsBy" type="HSplitContainer" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
+dragger_visibility = 2
 
 [node name="Label" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/SortPayloadsBy"]
 layout_mode = 2
@@ -1777,6 +1778,7 @@ popup/item_0/id = 0
 
 [node name="DebuggingMode" type="HSplitContainer" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
+dragger_visibility = 2
 
 [node name="Label" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/DebuggingMode"]
 layout_mode = 2
@@ -1788,6 +1790,7 @@ layout_mode = 2
 
 [node name="ClearPendingOnExit" type="HSplitContainer" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer"]
 layout_mode = 2
+dragger_visibility = 2
 
 [node name="Label" type="Label" parent="PanelContainer/TabContainer/Settings/MarginContainer/VBoxContainer/ClearPendingOnExit"]
 layout_mode = 2
