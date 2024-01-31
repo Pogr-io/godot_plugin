@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://co21y63e176p6"]
 
 [sub_resource type="GDScript" id="GDScript_tmu0w"]
-script/source = "extends HTTPRequest
+script/source = "extends HTTPRequest ##TODO: FIX closing the game without having sent the first payload
 
 var close_request: bool = false
 var monitor_dict: Dictionary = {}
@@ -24,7 +24,8 @@ func _notification(what) -> void:
 		get_tree().set_auto_accept_quit(false)
 		close_thread.start(toggle_session)
 		close_thread.wait_to_finish()
-		thread.wait_to_finish()
+		if thread.is_started():
+			thread.wait_to_finish()
 		close_request = true
 
 func toggle_session() -> void:
@@ -63,7 +64,7 @@ func exec_sys_info() -> Dictionary:
 
 func monitor_update() -> void:
 	var sys_monitor_info = pogr_plugin.get_sys_monitor_info()
-
+	
 	monitor_dict = {
 		\"engine\": \"Godot Engine \" + Engine.get_version_info().string,
 		\"loaded_objects\":{

@@ -6,7 +6,7 @@
 
 using namespace godot;
 
-class pogr_plugin : public RefCounted
+class pogr_plugin : public Object
 {
     GDCLASS(pogr_plugin, Object);
 

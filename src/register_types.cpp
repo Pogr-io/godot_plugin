@@ -26,7 +26,6 @@ void uninitialize_pogrplugin(ModuleInitializationLevel p_level)
     if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE)
     {
         Engine::get_singleton()->unregister_singleton("pogr_plugin");
-        memdelete(pogrplugin);
     }
 }
 

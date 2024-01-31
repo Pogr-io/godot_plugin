@@ -1239,7 +1239,6 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_pfg2i")
 tabs_visible = false
 
 [node name="POGR" type="Control" parent="PanelContainer/TabContainer"]
-visible = false
 custom_minimum_size = Vector2(600, 600)
 layout_mode = 2
 script = SubResource("GDScript_t81gv")
@@ -1712,6 +1711,7 @@ text = "Save
 icon = ExtResource("15_nfjk5")
 
 [node name="Settings" type="Control" parent="PanelContainer/TabContainer"]
+visible = false
 custom_minimum_size = Vector2(600, 600)
 layout_mode = 2
 
@@ -1874,7 +1874,6 @@ text = "Credits"
 label_settings = SubResource("LabelSettings_frl50")
 
 [node name="Setup" type="Control" parent="PanelContainer"]
-visible = false
 layout_mode = 2
 script = SubResource("GDScript_r7bbs")
 
@@ -1999,7 +1998,6 @@ libraries = {
 }
 
 [node name="Login" type="Control" parent="PanelContainer"]
-visible = false
 layout_mode = 2
 script = SubResource("GDScript_ovp2j")
 

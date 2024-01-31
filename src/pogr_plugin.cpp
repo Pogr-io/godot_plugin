@@ -23,12 +23,10 @@ pogr_plugin *pogr_plugin::get_singleton()
 }
 pogr_plugin::pogr_plugin()
 {
-    ERR_FAIL_COND(singleton != nullptr);
     singleton = this;
 }
 pogr_plugin::~pogr_plugin()
 {
-    ERR_FAIL_COND(singleton != this);
     singleton = nullptr;
 }
 
